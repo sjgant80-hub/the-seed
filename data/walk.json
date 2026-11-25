@@ -1,0 +1,38 @@
+{
+ "v": "buyer-walk/1",
+ "at": "2026-11-25",
+ "model": "qwen2.5:7b on this machine's CPU, through Ollama",
+ "note": "A simulated buyer walk: a local 7B model played four buyers (CFO, CTO, COO, owner-manager) and read this page's text cold. It is a model's first-pass audit, not a customer's opinion. Kar checked every gap against the page and pressed every control by hand (Plant it here grew a real run; Show the recorded plant replays it). The real gaps are below, each with what was changed. Not changed: that 'Plant it here is not clickable' (the walk reads text only; the button works and was tested), and lines already explained in the limits.",
+ "personas": [
+  {
+   "who": "The CFO of a 400-person firm",
+   "verdict": "followed the result; tripped on undefined words",
+   "gaps": [
+    { "gap": "\"The two terminations make growth safe to grant\" is vague about what they are", "fix": "the For-the-board bullet now names both: below, nothing kept it cannot re-derive itself; above, nothing irreversible without a one-time human grant" },
+    { "gap": "\"the axiom floor, cold\" uses \"cold\" without defining it", "fix": "the words list now defines cold: what the model gets right on its own, before any checking" }
+   ]
+  },
+  {
+   "who": "The CTO who also owns security",
+   "verdict": "wanted the human-in-the-loop and the organ gates spelled out",
+   "gaps": [
+    { "gap": "\"a grant the seed cannot mint\" — what does mint mean?", "fix": "reworded throughout to \"a one-time grant the seed has no way to issue for itself\"" },
+    { "gap": "\"The organism is alive\" is a metaphor left unexplained", "fix": "the words list now defines alive: a cell both carries the seed and reproduces a sealed next cell" }
+   ]
+  },
+  {
+   "who": "The COO who runs the teams that would use it",
+   "verdict": "read the blueprint gates without knowing what gated meant",
+   "gaps": [
+    { "gap": "\"gated 13/13\", \"gated 6/6\" without context", "fix": "the words list now says what gated means (a mutation test changed the organ's code every way and the tests caught each)" }
+   ]
+  },
+  {
+   "who": "The owner-manager of a 12-person business, no technical staff",
+   "verdict": "needed the plant action and the terminations in plainer words",
+   "gaps": [
+    { "gap": "\"the floor below, and a human above\" was abstract for a non-technical reader", "fix": "the board bullet now puts both terminations in plain words and names the irreversible acts" }
+   ]
+  }
+ ]
+}

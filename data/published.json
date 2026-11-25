@@ -1,4 +1,5 @@
 {
  "note": "the plant runs the page shows; null = not published yet",
- "plant": "data/runs/plant.json"
+ "plant": "data/runs/plant.json",
+ "walk": "data/walk.json"
 }

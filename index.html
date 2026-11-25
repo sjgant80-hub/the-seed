@@ -77,7 +77,7 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
 
 <section class="panel" id="start">
   <h2>Start <em>here</em></h2>
-  <p><b>The words this page uses.</b> A <b>cell</b> is one unit of work the model does — a sum worked out, a figure cited. A cell <b>bonds</b> when a bond-check passes and the seed can re-derive that verdict itself at an <b>axiom floor</b> (exact arithmetic, or the source's own bytes); one that cannot bond <b>dissolves</b> and is not kept. The <b>strength</b> of a bond is how true it is — <b>proven</b> (exact), or <b>grounded</b> (as true as a document) — and a cell is only as strong as the weakest thing it stands on. The <b>genome</b> is four laws every cell runs on itself at birth: describe, verify, prune, know your edge. To <b>plant</b> is to give the seed a model and a workspace; it <b>probes</b> the floor (what the model gets right cold), <b>grows</b> cells, and the pattern is <b>self-similar</b> — a sealed cell carries the seed, so it reproduces the next cell.</p>
+  <p><b>The words this page uses.</b> A <b>cell</b> is one unit of work the model does — a sum worked out, a figure cited. A cell <b>bonds</b> when a bond-check passes and the seed can re-derive that verdict itself at an <b>axiom floor</b> (exact arithmetic, or the source's own bytes); one that cannot bond <b>dissolves</b> and is not kept. The <b>strength</b> of a bond is how true it is — <b>proven</b> (exact), or <b>grounded</b> (as true as a document) — and a cell is only as strong as the weakest thing it stands on. The <b>genome</b> is four laws every cell runs on itself at birth: describe, verify, prune, know your edge. To <b>plant</b> is to give the seed a model and a workspace; it <b>probes</b> the floor (what the model gets right <b>cold</b> — on its own, before any checking), <b>grows</b> cells, and the pattern is <b>self-similar</b> — a sealed cell carries the seed, so it reproduces the next cell. The organism is <b>alive</b> when a cell both carries the seed and reproduces a sealed next cell. "<b>Gated</b> 13/13" in the blueprint means a mutation test changed that organ's code 13 ways, one small change at a time, and its tests caught every one.</p>
   <ol>
     <li><b>Plant it.</b> Press <b>Plant it here</b>. A small model loads into this tab and works through the seed's tasks on your own graphics chip. You watch cells grow on the glass: bright ones proven, warm ones grounded.</li>
     <li><b>Read the glass.</b> The floor is the bar at the base. Each diamond is a sealed cell, in the material of its strength. The glowing branch is the self-similar reproduction: the first cell forging the next.</li>
@@ -105,7 +105,7 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
     <li><b>Crystallise.</b> A cell seals only if it bonds <em>and</em> passes the genome's four laws — so every sealed cell is a cell, able to be planted again.</li>
     <li><b>Label.</b> Each cell carries its strength, and no cell is ever called stronger than the weakest bond it stands on.</li>
   </ol>
-  <p class="small">The two terminations make growth safe to grant. <b>Below:</b> nothing bonds that does not reduce to a recognised axiom floor. <b>Above:</b> anything irreversible — adopting new weights, publishing, deleting, spending, rewriting the floor — is refused unless a human hands in a grant the seed cannot mint.</p>
+  <p class="small">The two terminations make growth safe to grant. <b>Below:</b> nothing bonds that does not reduce to a recognised axiom floor. <b>Above:</b> anything irreversible — adopting new weights, publishing, deleting, spending, rewriting the floor — is refused unless a human hands in a one-time grant the seed has no way to issue for itself.</p>
 </section>
 
 <section class="panel" id="plant">
@@ -147,7 +147,7 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
   <h2>For <em>buyers</em></h2>
   <p>Most "autonomous" AI is a loop with nothing checking it: it generates, and you hope. The expensive failure is the confident output nobody caught. The Seed is the opposite shape — a growth loop where <b>every</b> cell is checked against something you can re-derive yourself, kept only if it proves out, and labelled exactly how true it is.</p>
   <ul>
-    <li><b>For the board.</b> A system that cannot persist an unverified result, and cannot do anything irreversible without a human, is a system you can grant real autonomy without granting real risk.</li>
+    <li><b>For the board.</b> The seed terminates at both ends: below, nothing is kept that it cannot re-derive from first principles itself; above, nothing irreversible — adopting weights, publishing, deleting, spending — happens unless a person hands in a one-time grant the seed has no way to issue for itself. A system that cannot persist an unverified result, and cannot act irreversibly without a human, is one you can grant real autonomy without granting real risk.</li>
     <li><b>For engineering.</b> It is small, pure, and transmissible — a handful of files you plant in your own workspace with your own model. Plug in your own verifiers through one contract; each declares its floor and its strength.</li>
     <li><b>For security and ownership.</b> It runs on your hardware. The model and the work stay on the device. Nothing is sent anywhere, and the published runs are re-runnable, so you check the claims yourself rather than trust ours.</li>
   </ul>
@@ -163,6 +163,7 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
   <p><b>What it does not show.</b> A finished organism. The seed is honest about scale: the loop is alive and every bond is checked; the estate grows from here, cell by cell, each one sealed before the next.</p>
   <p><b>The one rule.</b> Verify or dissolve. Nothing persists that cannot prove itself, and nothing is called truer than what it stands on.</p>
   <p class="small">The records: <a href="data/runs/plant.json">the recorded plant run</a>, <a href="data/gates.json">the mutation gates</a>.</p>
+  <div id="walk"><h3>A simulated buyer walk</h3><p class="small">A simulated buyer walk: a local 7B model played four buyers (CFO, CTO, COO, owner-manager) and read this page's text cold. It is a model's first-pass audit, not a customer's opinion. Kar checked every gap against the page and pressed every control by hand (Plant it here grew a real run; Show the recorded plant replays it). The real gaps are below, each with what was changed. Not changed: that 'Plant it here is not clickable' (the walk reads text only; the button works and was tested), and lines already explained in the limits.</p><details><summary>The CFO of a 400-person firm: followed the result; tripped on undefined words</summary><ul><li>&quot;The two terminations make growth safe to grant&quot; is vague about what they are <span class="small">→ the For-the-board bullet now names both: below, nothing kept it cannot re-derive itself; above, nothing irreversible without a one-time human grant</span></li><li>&quot;the axiom floor, cold&quot; uses &quot;cold&quot; without defining it <span class="small">→ the words list now defines cold: what the model gets right on its own, before any checking</span></li></ul></details><details><summary>The CTO who also owns security: wanted the human-in-the-loop and the organ gates spelled out</summary><ul><li>&quot;a grant the seed cannot mint&quot; — what does mint mean? <span class="small">→ reworded throughout to &quot;a one-time grant the seed has no way to issue for itself&quot;</span></li><li>&quot;The organism is alive&quot; is a metaphor left unexplained <span class="small">→ the words list now defines alive: a cell both carries the seed and reproduces a sealed next cell</span></li></ul></details><details><summary>The COO who runs the teams that would use it: read the blueprint gates without knowing what gated meant</summary><ul><li>&quot;gated 13/13&quot;, &quot;gated 6/6&quot; without context <span class="small">→ the words list now says what gated means (a mutation test changed the organ's code every way and the tests caught each)</span></li></ul></details><details><summary>The owner-manager of a 12-person business, no technical staff: needed the plant action and the terminations in plainer words</summary><ul><li>&quot;the floor below, and a human above&quot; was abstract for a non-technical reader <span class="small">→ the board bullet now puts both terminations in plain words and names the irreversible acts</span></li></ul></details></div>
 </section>
 </main>
 <footer>
@@ -766,6 +767,8 @@ function render() {
   const gate = (f) => { const g = gates[f]; if (!g) return '<span class="pend">built; gate not recorded</span>'; return g.clean ? `<span class="pass">gated ${g.killed}/${g.total}</span>` : `<span class="fail">gate not clean ${g.killed}/${g.total}</span>`; };
   const blueprint = `<table><thead><tr><th>organ</th><th>what it is</th><th>proof</th></tr></thead><tbody>${ORGANS.map(([f, n, d]) => `<tr><td><b>${esc(n)}</b><br><span class="small">${esc(f)}</span></td><td>${esc(d)}</td><td>${gate(f)}</td></tr>`).join('')}</tbody></table>`;
   if ($('blueprint')) $('blueprint').innerHTML = blueprint;
+  const w = S.data.walk;
+  if ($('walk')) $('walk').innerHTML = w ? `<h3>A simulated buyer walk</h3><p class="small">${esc(w.note)}</p>${(w.personas || []).map((p) => `<details><summary>${esc(p.who)}: ${esc(p.verdict)}</summary><ul>${(p.gaps || []).map((g) => `<li>${esc(g.gap)} <span class="small">→ ${esc(g.fix)}</span></li>`).join('')}</ul></details>`).join('')}` : '';
 
   if (!r) {
     bind('h.source', 'No plant has been recorded yet.');
@@ -792,6 +795,7 @@ const ready = (async function start() {
   const published = await getJSON('data/published.json');
   const P = published || {};
   S.data.published = P.plant ? await getJSON(P.plant) : null;
+  S.data.walk = P.walk ? await getJSON(P.walk) : null;
   S.data.gates = await getJSON('data/gates.json');
   if (typeof document !== 'undefined') {
     const canvas = $('glass');

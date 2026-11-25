@@ -92,6 +92,8 @@ function render() {
   const gate = (f) => { const g = gates[f]; if (!g) return '<span class="pend">built; gate not recorded</span>'; return g.clean ? `<span class="pass">gated ${g.killed}/${g.total}</span>` : `<span class="fail">gate not clean ${g.killed}/${g.total}</span>`; };
   const blueprint = `<table><thead><tr><th>organ</th><th>what it is</th><th>proof</th></tr></thead><tbody>${ORGANS.map(([f, n, d]) => `<tr><td><b>${esc(n)}</b><br><span class="small">${esc(f)}</span></td><td>${esc(d)}</td><td>${gate(f)}</td></tr>`).join('')}</tbody></table>`;
   if ($('blueprint')) $('blueprint').innerHTML = blueprint;
+  const w = S.data.walk;
+  if ($('walk')) $('walk').innerHTML = w ? `<h3>A simulated buyer walk</h3><p class="small">${esc(w.note)}</p>${(w.personas || []).map((p) => `<details><summary>${esc(p.who)}: ${esc(p.verdict)}</summary><ul>${(p.gaps || []).map((g) => `<li>${esc(g.gap)} <span class="small">→ ${esc(g.fix)}</span></li>`).join('')}</ul></details>`).join('')}` : '';
 
   if (!r) {
     bind('h.source', 'No plant has been recorded yet.');
@@ -118,6 +120,7 @@ const ready = (async function start() {
   const published = await getJSON('data/published.json');
   const P = published || {};
   S.data.published = P.plant ? await getJSON(P.plant) : null;
+  S.data.walk = P.walk ? await getJSON(P.walk) : null;
   S.data.gates = await getJSON('data/gates.json');
   if (typeof document !== 'undefined') {
     const canvas = $('glass');

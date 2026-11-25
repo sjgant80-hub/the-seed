@@ -16,7 +16,7 @@ export const KERNELS = [
   ['PLANT', 'src/plant.mjs'], ['SEEDSET', 'page/seedset.js'], ['GLASS', 'page/glass.js'],
 ];
 // what bake() writes into the page: these ids, and every data-bind. Device, load and plant status are the visitor's own.
-export const BAKED = ['planted', 'cellsTable', 'floorTable', 'blueprint'];
+export const BAKED = ['planted', 'cellsTable', 'floorTable', 'blueprint', 'walk'];
 const LF = (s) => s.split('\r\n').join('\n');
 const nsOf = (spec, from) => {
   const name = spec.split('/').pop();
