@@ -1,0 +1,14 @@
+The Seed: code under the MIT licence (LICENSE), copyright Simon Gant.
+
+- The tasks the seed is planted with are written in this repository (page/seedset.js). No dataset is used, and
+  nothing in a task describes a real person or company.
+- The model is not part of this repository. The page fetches Llama 3.2 1B Instruct (Meta, Llama 3.2 Community
+  Licence) from the MLC project's published build when the viewer presses Plant it here, and runs it with WebLLM
+  (Apache 2.0), loaded from its public package. Neither is checked against a fixed fingerprint here, and the page
+  says so under its limits.
+- genome/io.mjs, judge.mjs, lane.mjs, health.mjs and tombstone.mjs are the estate genome's hook template
+  (sjgant80-hub/estate-genome), byte for byte. genome/cell.mjs is this repository's own.
+- vendor/house/ is the house kit (sjgant80-hub/house-standard), MIT, copyright Simon Gant, byte for byte: the crystal
+  hero, the token sheet, the motion, the receipts reader and the ship gate the page test holds this page to.
+- vendor/fonts/ holds Fraunces, Hanken Grotesk and JetBrains Mono (variable, latin), each under the SIL Open Font
+  Licence 1.1; each folder carries its licence. They are served from this page so that no font host is called.

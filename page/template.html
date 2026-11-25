@@ -7,62 +7,87 @@
 <meta name="description" content="A minimal, plantable repo: give it a model and an empty workspace and it grows a verified organism, cell by cell, where every bond reduces to an axiom floor and nothing irreversible happens without a human.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.webmanifest">
+<meta name="house-exemption" content="credit: left off on the owner's instruction for this build, until he rules on it">
 <style>
-:root{
-  --bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd;
-  --lume:#5ef2e4; --amber:#f2b05e; --red:#ff6b6b; --abyss:#000;
-  --body:'Hanken Grotesk',system-ui,sans-serif; --mono:ui-monospace,'JetBrains Mono',monospace;
-}
-:root:not([data-theme="light"]) { color-scheme: dark; }
-@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#f6f8f9; --panel:#fff; --edge:#dde4e8; --ink:#13202a; --ink-2:#4a5a66; --abyss:#cfe8e4; } }
-:root[data-theme="dark"]{ --bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd; --abyss:#000; }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
-main{max-width:860px;margin:0 auto;padding:0 16px 80px}
-header{max-width:860px;margin:0 auto;padding:16px}
-nav{display:flex;flex-wrap:wrap;gap:4px 16px;font:500 13px/1 var(--mono);color:var(--ink-2)}
-nav a{color:var(--ink-2);text-decoration:none}nav a:hover{color:var(--lume)}
-h1{font:700 40px/1.05 var(--body);margin:18px 0 10px;letter-spacing:-.02em}
-h1 em{font-style:normal;color:var(--lume)}
-h2{font:700 25px/1.1 var(--body);margin:0 0 14px;letter-spacing:-.01em}
-h2 em{font-style:italic;color:var(--lume)}
-h3{font:600 16px/1.2 var(--mono);margin:18px 0 8px}
-.panel{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:22px;margin:16px 0}
-.kicker{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0}
-.lead{font-size:18px;color:var(--ink);margin:0 0 18px}
-.tags{font:500 12px/1.6 var(--mono);color:var(--ink-2)}
-.small{font:500 13px/1.55 var(--mono);color:var(--ink-2)}
-.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-button{font:600 14px/1 var(--body);color:#012;background:var(--lume);border:0;padding:13px 20px;cursor:pointer;border-radius:3px;min-height:40px}
-button:hover{filter:brightness(1.08)}button:disabled{opacity:.5;cursor:default}
-button.quiet{background:transparent;color:var(--ink);border:1px solid var(--edge)}
-code{font:500 13px var(--mono);background:rgba(94,242,228,.08);padding:1px 5px;border-radius:3px}
-ol,ul{padding-left:20px}li{margin:5px 0}
-table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono);margin:8px 0}
-th,td{border:1px solid var(--edge);padding:7px 10px;text-align:left}th{color:var(--ink-2);font-weight:600}
-td.num,th.num{text-align:right}
-.wrap{overflow-x:auto}
-.pass{color:var(--lume)}.fail{color:var(--red);font-weight:600}.soft{color:var(--amber)}.pend{color:var(--ink-2)}
-.proven{color:var(--lume)}.grounded{color:var(--amber)}
+/*HOUSE_CSS*/
+/* this build's own styles, for its own content, which now sits behind a click or inside the glass */
+#gem{position:relative;display:block;width:100%;height:min(68vh,560px);touch-action:none;cursor:grab;border-radius:14px;background:#02070c;margin:0 0 16px}
+.legacy{font-size:15px;line-height:1.6;color:var(--ink)}
+.legacy{--bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd; --lume:#5ef2e4; --amber:#f2b05e; --red:#ff6b6b; --abyss:#000; --body:'Hanken Grotesk',system-ui,sans-serif; --mono:ui-monospace,'JetBrains Mono',monospace;}
+.legacy{--bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd; --abyss:#000;}
+.legacy h2{font:700 25px/1.1 var(--body);margin:0 0 14px;letter-spacing:-.01em}
+.legacy h2 em{font-style:italic;color:var(--lume)}
+.legacy h3{font:600 16px/1.2 var(--mono);margin:18px 0 8px}
+.legacy .panel{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:22px;margin:16px 0}
+.legacy .kicker{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0}
+.legacy .lead{font-size:18px;color:var(--ink);margin:0 0 18px}
+.legacy .tags{font:500 12px/1.6 var(--mono);color:var(--ink-2)}
+.legacy .small{font:500 13px/1.55 var(--mono);color:var(--ink-2)}
+.legacy .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.legacy button{font:600 14px/1 var(--body);color:#012;background:var(--lume);border:0;padding:13px 20px;cursor:pointer;border-radius:3px;min-height:40px}
+.legacy button:hover{filter:brightness(1.08)}
+.legacy button:disabled{opacity:.5;cursor:default}
+.legacy button.quiet{background:transparent;color:var(--ink);border:1px solid var(--edge)}
+.legacy code{font:500 13px var(--mono);background:rgba(94,242,228,.08);padding:1px 5px;border-radius:3px}
+.legacy ol,.legacy ul{padding-left:20px}
+.legacy li{margin:5px 0}
+.legacy table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono);margin:8px 0}
+.legacy th,.legacy td{border:1px solid var(--edge);padding:7px 10px;text-align:left}
+.legacy th{color:var(--ink-2);font-weight:600}
+.legacy td.num,.legacy th.num{text-align:right}
+.legacy .wrap{overflow-x:auto}
+.legacy .pass{color:var(--lume)}
+.legacy .fail{color:var(--red);font-weight:600}
+.legacy .soft{color:var(--amber)}
+.legacy .pend{color:var(--ink-2)}
+.legacy .proven{color:var(--lume)}
+.legacy .grounded{color:var(--amber)}
 #glass{width:100%;height:320px;border:1px solid var(--edge);border-radius:6px;background:#02070c;display:block;margin:12px 0}
-.ledger{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0;font:500 13px/1.3 var(--mono)}
-.ledger b{display:block;font:700 22px/1 var(--body);color:var(--lume)}
-.key{font:500 12px/1.8 var(--mono);color:var(--ink-2)}.key i{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:5px}
-details{border-top:1px solid var(--edge);padding:8px 0}summary{cursor:pointer;font-weight:600;min-height:26px}
-footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:500 12px/1.7 var(--mono);border-top:1px solid var(--edge)}
-.diagram{font:500 13px/1.7 var(--mono);color:var(--ink);background:rgba(94,242,228,.04);border:1px solid var(--edge);border-radius:6px;padding:14px;overflow-x:auto;white-space:pre}
+.legacy .ledger{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0;font:500 13px/1.3 var(--mono)}
+.legacy .ledger b{display:block;font:700 22px/1 var(--body);color:var(--lume)}
+.legacy .key{font:500 12px/1.8 var(--mono);color:var(--ink-2)}
+.legacy .key i{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.legacy details{border-top:1px solid var(--edge);padding:8px 0}
+.legacy summary{cursor:pointer;font-weight:600;min-height:26px}
+.legacy .diagram{font:500 13px/1.7 var(--mono);color:var(--ink);background:rgba(94,242,228,.04);border:1px solid var(--edge);border-radius:6px;padding:14px;overflow-x:auto;white-space:pre}
 </style>
 </head>
 <body>
-<header>
-  <nav aria-label="On this page"><a href="#start">Start</a><a href="#how">How it works</a><a href="#plant">Plant it</a><a href="#numbers">The numbers</a><a href="#blueprint">Blueprint</a><a href="#limits">Limits</a><a href="#buyers">For buyers</a><a href="#paper">White paper</a></nav>
+<header class="hero" id="top">
+  <canvas id="crystal" role="img" aria-label="A crystal of 32 faces. Each lit face is one organ, one cell the model grew, or one probe of the floor: cyan when it held, red when it did not."></canvas>
+  <div class="hero-shade"></div>
+  <div class="wrap">
+    <p class="eyebrow">AI Native Solutions · The Seed</p>
+    <h1>Plant it. It <em>grows.</em></h1>
+    <p class="sub">A handful of small files. Give it a model and an empty workspace, and it grows software one checked cell at a time. What cannot prove itself dissolves.</p>
+    <div class="cta"><a class="btn primary" href="#result">See the result →</a><a class="btn ghost" href="#run">Plant it yourself</a></div>
+  </div>
+  <p class="facet" id="hsFacet" aria-live="polite">Reading the sealed record.</p>
 </header>
-<main>
-<section id="top">
-  <p class="kicker">A seed, not a program</p>
-  <h1>Plant it, and it <em>grows itself</em> — verified at every bond.</h1>
-  <p class="lead">The Seed is a handful of small files. Give it a model and an empty workspace, and it grows an organism of software one cell at a time: the model writes each cell, code checks it, and a cell is kept only if it <b>bonds</b> — proven down to an axiom the seed can re-derive itself. A cell that cannot prove itself dissolves. Nothing irreversible happens without a human. What grows is alive, because every part of it was checked.</p>
-  <div class="row"><button id="plant" type="button">Plant it here</button><button id="play" class="quiet" type="button">Show the recorded plant</button><span class="small">the model runs in your browser, on your own chip · about 880 MB, once</span></div>
+
+<section class="pad" id="result">
+  <div class="wrap">
+    <p class="kline reveal">The result</p>
+    <h2 class="claim reveal">A 1B model, planted in a browser tab. <b>It kept only what it could prove.</b></h2>
+    <div class="stats" id="hsReceipts">Reading the sealed record.</div>
+  </div>
+</section>
+
+<section class="pad alt" id="organs">
+  <div class="wrap">
+    <p class="kline reveal">How it is built</p>
+    <h2 class="claim reveal">Small files, one job each. <b>Every one mutation-gated.</b></h2>
+    <div class="stack reveal" id="hsClaims">Reading the gate record.</div>
+  </div>
+</section>
+
+<section class="pad proof" id="run">
+  <div class="wrap">
+    <h2 class="hl reveal"><span class="a">Don't trust us.</span><br><span class="b">Re-run it.</span></h2>
+    <p class="sub2 reveal">Plant it on your own graphics chip, or show the recorded plant. Nothing leaves your browser.</p>
+    <div class="glass legacy reveal" style="text-align:left">
+      
+      <div class="row"><button id="plant" type="button">Plant it here</button><button id="play" class="quiet" type="button">Show the recorded plant</button><span class="small">the model runs in your browser, on your own chip · about 880 MB, once</span></div>
   <p id="status" class="small" aria-live="polite">not planted yet</p>
   <div class="ledger" aria-label="What grew">
     <span><b data-bind="n.floor">—</b>floor, cold</span>
@@ -72,22 +97,27 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
     <span><b data-bind="n.alive">—</b>reproduces</span>
   </div>
   <p class="key"><span><i style="background:var(--lume)"></i>proven — exact arithmetic, nothing taken on trust</span><span><i style="background:var(--amber)"></i>grounded — a figure from a document, as true as the document</span></p>
-  <p class="tags">Verify or dissolve · Grows only where a verifier can check · A human at the top, axioms at the bottom.</p>
+      <p id="device" class="small">checking this device…</p>
+  <canvas id="glass" width="820" height="320" aria-label="the plant, drawn as it grows"></canvas>
+  <p id="plantOut" class="small" aria-live="polite">Press <b>Plant it here</b> above. Nothing leaves your browser.</p>
+    </div>
+    
+    <details class="honest reveal"><summary>What this does — and doesn't — claim</summary><div class="in"><p><b>A first cell, not a finished organism.</b> It shows the loop is alive and every bond is checked. It has not grown an estate.</p><p><b>Grounded is not true.</b> A grounded cell cites its document faithfully. If the document is wrong, so is the cell.</p><p><b>It does not train.</b> Its distillation organ gates adoption. It changes no weights.</p><p><b>The model is not pinned.</b> The browser model comes from a public library and is not checked against a fixed fingerprint here.</p><p>The full list is below, under "What this does not prove".</p></div></details>
+  </div>
 </section>
 
-<section class="panel" id="start">
-  <h2>Start <em>here</em></h2>
-  <p><b>The words this page uses.</b> A <b>cell</b> is one unit of work the model does — a sum worked out, a figure cited. A cell <b>bonds</b> when a bond-check passes and the seed can re-derive that verdict itself at an <b>axiom floor</b> (exact arithmetic, or the source's own bytes); one that cannot bond <b>dissolves</b> and is not kept. The <b>strength</b> of a bond is how true it is — <b>proven</b> (exact), or <b>grounded</b> (as true as a document) — and a cell is only as strong as the weakest thing it stands on. The <b>genome</b> is four laws every cell runs on itself at birth: describe, verify, prune, know your edge. To <b>plant</b> is to give the seed a model and a workspace; it <b>probes</b> the floor (what the model gets right <b>cold</b> — on its own, before any checking), <b>grows</b> cells, and the pattern is <b>self-similar</b> — a sealed cell carries the seed, so it reproduces the next cell. The organism is <b>alive</b> when a cell both carries the seed and reproduces a sealed next cell. "<b>Gated</b> 13/13" in the blueprint means a mutation test changed that organ's code 13 ways, one small change at a time, and its tests caught every one.</p>
+<section class="pad alt" id="full">
+  <div class="wrap">
+    <p class="kline reveal">Everything, in full</p>
+    <h2 class="claim reveal">Every detail is still here. <b>One click away.</b></h2>
+    <details class="honest reveal" style="max-width:none"><summary>What it is, in one paragraph</summary><div class="in legacy"><p class="lead">The Seed is a handful of small files. Give it a model and an empty workspace, and it grows an organism of software one cell at a time: the model writes each cell, code checks it, and a cell is kept only if it <b>bonds</b> — proven down to an axiom the seed can re-derive itself. A cell that cannot prove itself dissolves. Nothing irreversible happens without a human. What grows is alive, because every part of it was checked.</p></div></details>
+    <details class="honest reveal" id="start" style="max-width:none"><summary>Start here</summary><div class="in legacy"><p><b>The words this page uses.</b> A <b>cell</b> is one unit of work the model does — a sum worked out, a figure cited. A cell <b>bonds</b> when a bond-check passes and the seed can re-derive that verdict itself at an <b>axiom floor</b> (exact arithmetic, or the source's own bytes); one that cannot bond <b>dissolves</b> and is not kept. The <b>strength</b> of a bond is how true it is — <b>proven</b> (exact), or <b>grounded</b> (as true as a document) — and a cell is only as strong as the weakest thing it stands on. The <b>genome</b> is four laws every cell runs on itself at birth: describe, verify, prune, know your edge. To <b>plant</b> is to give the seed a model and a workspace; it <b>probes</b> the floor (what the model gets right <b>cold</b> — on its own, before any checking), <b>grows</b> cells, and the pattern is <b>self-similar</b> — a sealed cell carries the seed, so it reproduces the next cell. The organism is <b>alive</b> when a cell both carries the seed and reproduces a sealed next cell. "<b>Gated</b> 13/13" in the blueprint means a mutation test changed that organ's code 13 ways, one small change at a time, and its tests caught every one.</p>
   <ol>
     <li><b>Plant it.</b> Press <b>Plant it here</b>. A small model loads into this tab and works through the seed's tasks on your own graphics chip. You watch cells grow on the glass: bright ones proven, warm ones grounded.</li>
     <li><b>Read the glass.</b> The floor is the bar at the base. Each diamond is a sealed cell, in the material of its strength. The glowing branch is the self-similar reproduction: the first cell forging the next.</li>
     <li><b>Check the record.</b> A plant run is published whole. Press <b>Show the recorded plant</b> to see it, and the seed re-grows it with no model to the same result.</li>
-  </ol>
-</section>
-
-<section class="panel" id="how">
-  <h2>How it <em>works</em></h2>
-  <p>One turn grows one cell. The model generates, code verifies or dissolves, and what survives crystallises:</p>
+  </ol></div></details>
+    <details class="honest reveal" id="how" style="max-width:none"><summary>How it works</summary><div class="in legacy"><p>One turn grows one cell. The model generates, code verifies or dissolves, and what survives crystallises:</p>
   <div class="diagram">  task ──▶  MODEL generates a reply
             │
             ▼
@@ -105,70 +135,47 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
     <li><b>Crystallise.</b> A cell seals only if it bonds <em>and</em> passes the genome's four laws — so every sealed cell is a cell, able to be planted again.</li>
     <li><b>Label.</b> Each cell carries its strength, and no cell is ever called stronger than the weakest bond it stands on.</li>
   </ol>
-  <p class="small">The two terminations make growth safe to grant. <b>Below:</b> nothing bonds that does not reduce to a recognised axiom floor. <b>Above:</b> anything irreversible — adopting new weights, publishing, deleting, spending, rewriting the floor — is refused unless a human hands in a one-time grant the seed has no way to issue for itself.</p>
-</section>
-
-<section class="panel" id="plant">
-  <h2>Plant it <em>here</em></h2>
-  <p id="device" class="small">checking this device…</p>
-  <canvas id="glass" width="820" height="320" aria-label="the plant, drawn as it grows"></canvas>
-  <p id="plantOut" class="small" aria-live="polite">Press <b>Plant it here</b> above. Nothing leaves your browser.</p>
-</section>
-
-<section class="panel" id="numbers">
-  <h2>The <em>numbers</em></h2>
-  <p class="small" data-bind="h.source">not planted yet</p>
+  <p class="small">The two terminations make growth safe to grant. <b>Below:</b> nothing bonds that does not reduce to a recognised axiom floor. <b>Above:</b> anything irreversible — adopting new weights, publishing, deleting, spending, rewriting the floor — is refused unless a human hands in a one-time grant the seed has no way to issue for itself.</p></div></details>
+    <details class="honest reveal" id="numbers" style="max-width:none"><summary>The numbers</summary><div class="in legacy"><p class="small" data-bind="h.source">not planted yet</p>
   <div id="planted">not planted yet</div>
   <h3>The axiom floor, cold</h3>
   <div class="wrap" id="floorTable">not planted yet</div>
   <h3>The cells it grew</h3>
-  <div class="wrap" id="cellsTable">not planted yet</div>
-</section>
-
-<section class="panel" id="blueprint">
-  <h2>How it is <em>built</em></h2>
-  <p class="small">"Gated 30/30" means a mutation test changed that organ's code 30 ways, one small change at a time, and its tests caught every one. Nine organs, each a small file with one job, each mutation-gated.</p>
+  <div class="wrap" id="cellsTable">not planted yet</div></div></details>
+    <details class="honest reveal" id="built" style="max-width:none"><summary>How it is built</summary><div class="in legacy"><p class="small">"Gated 30/30" means a mutation test changed that organ's code 30 ways, one small change at a time, and its tests caught every one. Nine organs, each a small file with one job, each mutation-gated.</p>
   <div class="wrap" id="blueprint">not measured yet</div>
-  <p class="small">Below the organs: the axiom floor (<code>src/floor.mjs</code>) is the termination the whole thing reduces to. Above them: a person. The seed holds no key, mints no grant, and does nothing it cannot take back without one.</p>
-</section>
-
-<section class="panel" id="limits">
-  <h2>What this does <em>not</em> prove</h2>
-  <ul>
+  <p class="small">Below the organs: the axiom floor (<code>src/floor.mjs</code>) is the termination the whole thing reduces to. Above them: a person. The seed holds no key, mints no grant, and does nothing it cannot take back without one.</p></div></details>
+    <details class="honest reveal" id="limits" style="max-width:none"><summary>What this does not prove</summary><div class="in legacy"><ul>
     <li><b>It is a first cell, not a finished organism.</b> The seed grows and seals real cells and proves the pattern reproduces. It does not claim to have grown the whole estate; it claims the loop is alive and every bond is checked.</li>
     <li><b>Grounded is not true.</b> A grounded cell cites a document faithfully. If the document is wrong, the answer is wrong, and it is still grounded. The label is the promise, not a guarantee of the world.</li>
     <li><b>The floor is small on purpose.</b> Two axiom floors ship — exact arithmetic and byte-equality. The seed carries the <em>contract</em> any other verifier plugs into (with its own floor and honest strength); it does not carry the whole estate's verifiers. That is what "minimal and transmissible" means.</li>
-    <li><b>Depth 5 is not built.</b> The distillation organ harvests verified cells and gates adoption, but it does not train weights, and it never adopts without beating the sealed set and a human grant.</li>
+    <li><b>The seed does not train.</b> Its distillation organ harvests verified cells and gates adoption; it changes no weights, and it never adopts without beating the sealed set and a human grant. The training itself is a separate build, <a href="https://sjgant80-hub.github.io/the-distillation/">The Distillation</a>.</li>
     <li><b>The model is not pinned.</b> The browser model comes from the public WebLLM library; this page does not check it against a fixed fingerprint, so a changed file upstream would not be caught here.</li>
-  </ul>
-</section>
-
-<section class="panel" id="buyers">
-  <h2>For <em>buyers</em></h2>
-  <p>Most "autonomous" AI is a loop with nothing checking it: it generates, and you hope. The expensive failure is the confident output nobody caught. The Seed is the opposite shape — a growth loop where <b>every</b> cell is checked against something you can re-derive yourself, kept only if it proves out, and labelled exactly how true it is.</p>
+  </ul></div></details>
+    <details class="honest reveal" id="buyers" style="max-width:none"><summary>For buyers</summary><div class="in legacy"><p>Most "autonomous" AI is a loop with nothing checking it: it generates, and you hope. The expensive failure is the confident output nobody caught. The Seed is the opposite shape — a growth loop where <b>every</b> cell is checked against something you can re-derive yourself, kept only if it proves out, and labelled exactly how true it is.</p>
   <ul>
     <li><b>For the board.</b> The seed terminates at both ends: below, nothing is kept that it cannot re-derive from first principles itself; above, nothing irreversible — adopting weights, publishing, deleting, spending — happens unless a person hands in a one-time grant the seed has no way to issue for itself. A system that cannot persist an unverified result, and cannot act irreversibly without a human, is one you can grant real autonomy without granting real risk.</li>
     <li><b>For engineering.</b> It is small, pure, and transmissible — a handful of files you plant in your own workspace with your own model. Plug in your own verifiers through one contract; each declares its floor and its strength.</li>
     <li><b>For security and ownership.</b> It runs on your hardware. The model and the work stay on the device. Nothing is sent anywhere, and the published runs are re-runnable, so you check the claims yourself rather than trust ours.</li>
   </ul>
-  <p class="small">Supplied by <a href="https://www.ai-nativesolutions.com">AI Native Solutions</a>; support is agreed per deployment, in each deployment's agreement.</p>
-</section>
-
-<section class="panel" id="paper">
-  <h2>White <em>paper</em>: a seed, not a program</h2>
-  <p><b>The problem.</b> A program does one job and stops. An AI left to grow on its own does not stop, and nothing tells it which of its own steps was wrong, so it compounds its mistakes as readily as its successes. Neither is what you want from a system meant to build.</p>
+  <p class="small">Supplied by <a href="https://www.ai-nativesolutions.com">AI Native Solutions</a>; support is agreed per deployment, in each deployment's agreement.</p></div></details>
+    <details class="honest reveal" id="paper" style="max-width:none"><summary>White paper: a seed, not a program</summary><div class="in legacy"><p><b>The problem.</b> A program does one job and stops. An AI left to grow on its own does not stop, and nothing tells it which of its own steps was wrong, so it compounds its mistakes as readily as its successes. Neither is what you want from a system meant to build.</p>
   <p><b>The idea.</b> Carry the whole pattern of a verified, self-growing organism in the smallest block that still holds it, and make every fusion verify-or-dissolve. The model generates; code verifies down to an axiom the seed re-derives itself; what proves out crystallises into a cell; the cell carries the seed and reproduces. Growth adds up instead of washing out, because nothing unverified is ever kept.</p>
   <p><b>How it is trusted.</b> Every organ is pure and total — a hostile input returns a refusal, never a throw — and every organ is mutation-gated: its tests must catch every small change to its code. The whole thing terminates at both ends: an axiom floor below that nothing bonds without reducing to, and a person above that no irreversible act passes without.</p>
   <p><b>What this page tests.</b> That a small model, planted in a browser tab with this seed, probes a floor, grows and seals real cells of two strengths, and reproduces the pattern — a first cell, alive — with no number written down that a recorded, re-runnable plant did not measure.</p>
   <p><b>What it does not show.</b> A finished organism. The seed is honest about scale: the loop is alive and every bond is checked; the estate grows from here, cell by cell, each one sealed before the next.</p>
   <p><b>The one rule.</b> Verify or dissolve. Nothing persists that cannot prove itself, and nothing is called truer than what it stands on.</p>
   <p class="small">The records: <a href="data/runs/plant.json">the recorded plant run</a>, <a href="data/gates.json">the mutation gates</a>.</p>
-  <div id="walk"></div>
+  <div id="walk"></div></div></details>
+  </div>
 </section>
-</main>
+
 <footer>
-  The Seed · built by Kar · MIT licence, holder Simon Gant · supplied by AI Native Solutions · <a href="https://github.com/sjgant80-hub/the-seed">source</a><br>
-  AI you own. Proof you can re-run.
+  <div class="wrap frow">
+    <div><div class="brand">The Seed</div><div class="fnote">The Seed · built by Kar · MIT licence, holder Simon Gant · supplied by AI Native Solutions · <a href="https://github.com/sjgant80-hub/the-seed">source</a><br>
+  AI you own. Proof you can re-run.</div></div>
+    <div class="taglist"><span>›</span> AI you own. Proof you can re-run.<br><span>›</span> A small model that says "I can't tell."<br><span>›</span> Nothing leaves your browser.</div>
+  </div>
 </footer>
 <script type="module">
 /*KERNELS*/

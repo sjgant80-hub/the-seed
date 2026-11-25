@@ -39,6 +39,11 @@ again. A cell that cannot prove itself dissolves and is not kept.
 | `src/distill.mjs` | verified cells → training data; adopt new weights only if they beat the sealed set, and only with a grant |
 | `src/plant.mjs` | probe the floor, grow and seal cells, prove the pattern reproduces. Does no irreversible act |
 
+The repository is itself a cell of the estate: `seed.json` and `genome/cell.mjs` answer the estate's birth check in CI
+with the seed's own floor, and that file is mutation-gated like the organs. The page is built on the
+[house standard](https://sjgant80-hub.github.io/house-standard/): the result leads, every number is a receipt with its
+record one click away, and the page test holds it to the standard's ship gate.
+
 Two reference verifiers ship so the loop runs the moment it is planted: **proven** (exact arithmetic) and **grounded**
 (a quote that is the source's own bytes). The seed carries the *contract* any other verifier plugs into — each
 declaring its own floor and its own honest strength — not the whole estate's verifiers. That is what minimal and
@@ -77,8 +82,9 @@ to the same result (`scripts/publish.mjs --check`).
 - Grounded is not true. A grounded cell cites a document faithfully; if the document is wrong, the answer is wrong, and
   it is still grounded. The label is the promise.
 - The floor is small on purpose: two axiom floors ship. The seed carries the contract for any other.
-- Depth 5 (training weights) is not built. Distillation harvests verified cells and gates adoption; it never adopts
-  without beating the sealed set and a human grant.
+- The seed does not train weights. Its distillation organ harvests verified cells and gates adoption; it never adopts
+  without beating the sealed set and a human grant. The training itself is a separate build,
+  [The Distillation](https://sjgant80-hub.github.io/the-distillation/).
 - The browser model comes from the public WebLLM library; this page does not check it against a fixed fingerprint.
 
 Built by Kar. MIT licence, holder Simon Gant. Supplied by [AI Native Solutions](https://www.ai-nativesolutions.com);

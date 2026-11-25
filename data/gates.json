@@ -1,7 +1,7 @@
 {
  "witness": "v0.6",
- "total": 131,
- "killed": 131,
+ "total": 142,
+ "killed": 142,
  "clean": true,
  "files": {
   "src/genome.mjs": {
@@ -57,9 +57,18 @@
    "killed": 14,
    "ignored": 0,
    "clean": true
+  },
+  "genome/cell.mjs": {
+   "total": 11,
+   "killed": 11,
+   "ignored": 0,
+   "clean": true
   }
  },
  "nothingToMutate": {
+  "genome/io.mjs, judge.mjs, lane.mjs, health.mjs, tombstone.mjs": "the estate genome's hook template, byte for byte; gated in estate-genome (template/genome), exercised here by the birth check in CI",
+  "vendor/house/": "the house kit, byte for byte from house-standard, where its ship gate and receipts reader are gated; the page test holds this page to that gate",
+  "page/house-app.js": "the house layer shows the recorded plant and the gate record as receipts and decides nothing; what it draws is baked into index.html and held to the ship gate by the page test",
   "page/glass.js": "the glass draws a plant record and decides nothing; its drawing is checked in a browser"
  }
 }

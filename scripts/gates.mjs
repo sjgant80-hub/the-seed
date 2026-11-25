@@ -14,8 +14,12 @@ export const GATED = [
   ['src/forge.mjs', ['test/forge.test.mjs']],
   ['src/distill.mjs', ['test/distill.test.mjs']],
   ['src/plant.mjs', ['test/plant.test.mjs']],
+  ['genome/cell.mjs', ['test/cell.test.mjs']],
 ];
 export const NOTHING_TO_MUTATE = {
+  'genome/io.mjs, judge.mjs, lane.mjs, health.mjs, tombstone.mjs': "the estate genome's hook template, byte for byte; gated in estate-genome (template/genome), exercised here by the birth check in CI",
+  'vendor/house/': 'the house kit, byte for byte from house-standard, where its ship gate and receipts reader are gated; the page test holds this page to that gate',
+  'page/house-app.js': 'the house layer shows the recorded plant and the gate record as receipts and decides nothing; what it draws is baked into index.html and held to the ship gate by the page test',
   'page/glass.js': 'the glass draws a plant record and decides nothing; its drawing is checked in a browser',
 };
 

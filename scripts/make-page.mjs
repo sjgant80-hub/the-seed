@@ -11,12 +11,14 @@ import { fileURLToPath } from 'node:url';
 
 // [namespace, file] in dependency order; each module may import only from the ones above it
 export const KERNELS = [
+  // the house kit (the crystal, the motion) and the house's receipts reader, as vendored
+  ['CRYSTAL', 'vendor/house/crystal.js'], ['HOUSE', 'vendor/house/house.js'], ['RECEIPTS', 'vendor/house/receipts.mjs'],
   ['GENOME', 'src/genome.mjs'], ['FLOOR', 'src/floor.mjs'], ['VERIFIER', 'src/verifier.mjs'], ['LOOP', 'src/loop.mjs'],
   ['TERMINATE', 'src/terminate.mjs'], ['WATCHER', 'src/watcher.mjs'], ['FORGE', 'src/forge.mjs'], ['DISTILL', 'src/distill.mjs'],
   ['PLANT', 'src/plant.mjs'], ['SEEDSET', 'page/seedset.js'], ['GLASS', 'page/glass.js'],
 ];
 // what bake() writes into the page: these ids, and every data-bind. Device, load and plant status are the visitor's own.
-export const BAKED = ['planted', 'cellsTable', 'floorTable', 'blueprint', 'walk'];
+export const BAKED = ['hsFacet', 'hsReceipts', 'hsClaims', 'planted', 'cellsTable', 'floorTable', 'blueprint', 'walk'];
 const LF = (s) => s.split('\r\n').join('\n');
 const nsOf = (spec, from) => {
   const name = spec.split('/').pop();
@@ -45,7 +47,7 @@ export function build(root = '.') {
     const { code, names } = body(read(file), file);
     return `// ${file}, inlined byte for byte (imports read the scopes above; export removed)\nconst ${ns} = (() => {\n${code}\nreturn { ${names.join(', ')} };\n})();`;
   }).join('\n\n');
-  return read('page/template.html').replace('/*KERNELS*/', () => kernels).replace('/*APP*/', () => read('page/app.js').trim());
+  return read('page/template.html').replace('/*HOUSE_CSS*/', () => read('vendor/house/house.css').trim()).replace('/*KERNELS*/', () => kernels).replace('/*APP*/', () => `${read('page/app.js').trim()}\n\n${read('page/house-app.js').trim()}`);
 }
 
 const escText = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -78,6 +80,7 @@ export async function bake(html, root = '.') {
     const code = html.slice(html.indexOf('<script type="module">') + 22, html.lastIndexOf('</script>'));
     await import('data:text/javascript;base64,' + Buffer.from(`${code}\n// bake ${++runs}`).toString('base64'));
     await g.__seed.ready;
+    if (g.__houseLayer) await g.__houseLayer;                       // the house layer draws after the page script, and is baked with it
   } finally {
     g.document = keep.document; g.window = keep.window; g.fetch = keep.fetch;
     try { if (keep.ls) Object.defineProperty(g, 'localStorage', keep.ls); else delete g.localStorage; } catch { /* leave it */ }

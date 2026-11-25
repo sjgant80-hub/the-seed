@@ -7,62 +7,236 @@
 <meta name="description" content="A minimal, plantable repo: give it a model and an empty workspace and it grows a verified organism, cell by cell, where every bond reduces to an axiom floor and nothing irreversible happens without a human.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.webmanifest">
+<meta name="house-exemption" content="credit: left off on the owner's instruction for this build, until he rules on it">
 <style>
-:root{
-  --bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd;
-  --lume:#5ef2e4; --amber:#f2b05e; --red:#ff6b6b; --abyss:#000;
-  --body:'Hanken Grotesk',system-ui,sans-serif; --mono:ui-monospace,'JetBrains Mono',monospace;
-}
-:root:not([data-theme="light"]) { color-scheme: dark; }
-@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#f6f8f9; --panel:#fff; --edge:#dde4e8; --ink:#13202a; --ink-2:#4a5a66; --abyss:#cfe8e4; } }
-:root[data-theme="dark"]{ --bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd; --abyss:#000; }
+/* house.css — the AI Native house standard: one token sheet, one kit. Every page is built from these and nothing else.
+   HERO · RECEIPTS · THE STACK · THE GLASS · HONEST EXPANDER. The law of the page: the loudest true number leads, every
+   caveat waits behind a click, and no section is prose. Fonts are the house's three faces, served from the page. */
+@font-face{font-family:'Fraunces';src:url('vendor/fonts/fraunces/files/fraunces-latin-full-italic.woff2') format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:'Fraunces';src:url('vendor/fonts/fraunces/files/fraunces-latin-full-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Hanken Grotesk';src:url('vendor/fonts/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('vendor/fonts/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{color-scheme:dark;--bg:#02070c;--bg2:#060e18;--panel:#081320;--ink:#e9f2f6;--soft:#aebecb;--muted:#6f8698;--cyan:#49e8c8;--cyan-dim:#1f6a60;--gold:#ffcf6a;--red:#ff6b6b;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.055);--display:'Fraunces',Georgia,serif;--sans:'Hanken Grotesk',system-ui,-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--gut:max(20px,env(safe-area-inset-left,0px));--gutr:max(20px,env(safe-area-inset-right,0px))}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
-main{max-width:860px;margin:0 auto;padding:0 16px 80px}
-header{max-width:860px;margin:0 auto;padding:16px}
-nav{display:flex;flex-wrap:wrap;gap:4px 16px;font:500 13px/1 var(--mono);color:var(--ink-2)}
-nav a{color:var(--ink-2);text-decoration:none}nav a:hover{color:var(--lume)}
-h1{font:700 40px/1.05 var(--body);margin:18px 0 10px;letter-spacing:-.02em}
-h1 em{font-style:normal;color:var(--lume)}
-h2{font:700 25px/1.1 var(--body);margin:0 0 14px;letter-spacing:-.01em}
-h2 em{font-style:italic;color:var(--lume)}
-h3{font:600 16px/1.2 var(--mono);margin:18px 0 8px}
-.panel{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:22px;margin:16px 0}
-.kicker{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0}
-.lead{font-size:18px;color:var(--ink);margin:0 0 18px}
-.tags{font:500 12px/1.6 var(--mono);color:var(--ink-2)}
-.small{font:500 13px/1.55 var(--mono);color:var(--ink-2)}
-.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-button{font:600 14px/1 var(--body);color:#012;background:var(--lume);border:0;padding:13px 20px;cursor:pointer;border-radius:3px;min-height:40px}
-button:hover{filter:brightness(1.08)}button:disabled{opacity:.5;cursor:default}
-button.quiet{background:transparent;color:var(--ink);border:1px solid var(--edge)}
-code{font:500 13px var(--mono);background:rgba(94,242,228,.08);padding:1px 5px;border-radius:3px}
-ol,ul{padding-left:20px}li{margin:5px 0}
-table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono);margin:8px 0}
-th,td{border:1px solid var(--edge);padding:7px 10px;text-align:left}th{color:var(--ink-2);font-weight:600}
-td.num,th.num{text-align:right}
-.wrap{overflow-x:auto}
-.pass{color:var(--lume)}.fail{color:var(--red);font-weight:600}.soft{color:var(--amber)}.pend{color:var(--ink-2)}
-.proven{color:var(--lume)}.grounded{color:var(--amber)}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{line-height:1.5;font-size:16px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gutr)}
+.mono{font-family:var(--mono)}
+em{font-style:italic;font-family:var(--display);font-weight:600}
+code{font:500 .88em var(--mono);color:var(--cyan);overflow-wrap:anywhere}
+.pass{color:var(--cyan)}.fail{color:var(--red)}.pend{color:var(--gold)}.dim{color:var(--muted)}
+
+/* HERO: the crystal behind the headline */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(120% 90% at 70% 18%,#0a1826 0%,var(--bg) 58%)}
+#crystal{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+.hero-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(2,7,12,.78) 0%,rgba(2,7,12,.34) 46%,rgba(2,7,12,0) 70%),radial-gradient(130% 110% at 50% 42%,transparent 50%,rgba(2,6,12,.7) 100%)}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-block:12vh;pointer-events:none}
+.hero .wrap>*{pointer-events:auto}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,9vw,104px);line-height:.98;letter-spacing:-.02em;margin:18px 0 0;text-wrap:balance;max-width:14ch}
+h1 em{color:var(--cyan)}
+.sub{font-size:clamp(16px,2.3vw,21px);color:var(--soft);max-width:46ch;margin:26px 0 0;line-height:1.55}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13.5px;letter-spacing:.02em;padding:13px 20px;min-height:46px;border-radius:999px;text-decoration:none;transition:.18s ease;white-space:nowrap;cursor:pointer;border:1px solid transparent;background:none;color:var(--ink)}
+.btn.primary{background:var(--cyan);color:#021310;font-weight:700}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px -12px var(--cyan)}
+.btn.ghost{border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.facet{position:absolute;z-index:3;left:var(--gut);bottom:22px;font:500 12px/1.5 var(--mono);color:var(--soft);max-width:min(560px,calc(100vw - 40px));min-height:18px;pointer-events:none}
+.facet b{color:var(--ink);font-weight:500}
+
+/* SECTIONS */
+section{position:relative;z-index:2}
+.pad{padding-block:clamp(72px,11vh,140px)}
+.alt{background:linear-gradient(180deg,var(--bg),#040b14);border-top:1px solid var(--line2)}
+.deep{background:var(--bg2);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.kline{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin:0 0 20px}
+.claim{font-family:var(--display);font-weight:400;font-size:clamp(30px,5.2vw,58px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance;max-width:20ch;margin:0}
+.claim b{font-weight:600}
+.claim em{color:var(--cyan)}
+.lede{color:var(--soft);font-size:clamp(15px,1.9vw,18px);line-height:1.6;max-width:52ch;margin:26px 0 0}
+.lede b{color:var(--ink);font-weight:600}
+
+/* RECEIPTS: the number is the hero */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:64px;border-top:1px solid var(--line);padding-top:48px}
+.stat .n{font-family:var(--mono);font-weight:700;font-size:clamp(38px,6.6vw,76px);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.stat .n .was{color:var(--muted)}.stat .n .arrow{color:var(--cyan-dim);padding:0 .12em}.stat .n .now{color:var(--cyan)}.stat .n .bad{color:var(--red)}.stat .n .wait{color:var(--gold)}
+.stat .lab{color:var(--soft);font-size:14px;margin-top:16px;line-height:1.5;max-width:28ch}
+.stat .lab b{color:var(--ink);font-weight:600}
+.src{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--muted);text-decoration:none;margin-top:10px;border-bottom:1px dotted var(--muted);padding-bottom:2px}
+.src:hover{color:var(--cyan);border-color:var(--cyan)}
+.wins{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:42px}
+.win{border:1px solid var(--line2);border-radius:16px;padding:26px 22px;background:var(--panel)}
+.win .wn{font-family:var(--mono);font-weight:700;font-size:clamp(26px,3.6vw,42px);color:var(--cyan);letter-spacing:-.02em;line-height:1;white-space:nowrap}
+.win .wn .of{color:var(--muted)}
+.win .wl{color:var(--soft);font-size:13px;margin-top:12px;line-height:1.5}
+
+/* CARDS */
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.acts.two{grid-template-columns:repeat(2,1fr)}
+.act{position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--panel),#050c15);border:1px solid var(--line2);border-radius:18px;padding:28px 24px 24px;text-decoration:none;transition:.2s ease;overflow:hidden}
+a.act:hover,.act.lift:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 24px 60px -34px #000}
+.act::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(73,232,200,.10),transparent 60%)}
+.act:hover::before{opacity:1}
+.act .num{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--muted)}
+.act h3{font-family:var(--display);font-weight:500;font-size:26px;letter-spacing:-.01em;margin:14px 0 0}
+.act p{color:var(--soft);font-size:14.5px;line-height:1.55;margin:10px 0 0;flex:1}
+.act .go{font-family:var(--mono);font-size:12.5px;color:var(--cyan);margin-top:18px;display:inline-flex;gap:7px;align-items:center}
+
+/* THE STACK: one line per layer */
+.stack{margin-top:44px;border:1px solid var(--line2);border-radius:18px;overflow:hidden;background:#040b13}
+.srow{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;border-top:1px solid var(--line2);padding:16px 22px;transition:.16s}
+.srow:first-child{border-top:none}
+.srow:hover{background:#08141f}
+.srow .d{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.12em}
+.srow .nm{display:flex;gap:6px 14px;align-items:baseline;flex-wrap:wrap;min-width:0}
+.srow .nm b{font-family:var(--display);font-weight:500;font-size:19px}
+.srow .nm span{color:var(--soft);font-size:14px;min-width:0;overflow-wrap:anywhere}
+.srow.red .d{color:var(--red)}.srow.gold .d{color:var(--gold)}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.tag.off{color:var(--muted);border:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.spark{display:block;width:100%;max-width:520px;height:64px;margin:12px 0 0}
+.tag.cy{color:var(--cyan);border:1px solid rgba(73,232,200,.32)}
+.tag.gd{color:var(--gold);border:1px solid rgba(255,207,106,.34);animation:breathe 2.4s ease-in-out infinite}
+.tag.rd{color:var(--red);border:1px solid rgba(255,107,107,.4)}
+@keyframes breathe{50%{opacity:.55}}
+
+/* THE GLASS: it runs here, on the visitor's own device */
+.glass{margin-top:44px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#07121d,#040b13);padding:26px 24px;box-shadow:0 30px 80px -50px #000,inset 0 1px 0 rgba(255,255,255,.04)}
+.glass h3{font-family:var(--display);font-weight:500;font-size:24px;margin:0 0 6px}
+.glass .hint{color:var(--soft);font-size:14px;margin:0 0 16px;max-width:60ch}
+.glass .out{font:500 13px/1.6 var(--mono);color:var(--soft);margin:14px 0 0;min-height:22px}
+.glass textarea,.glass input,.glass select{font:500 13px/1.5 var(--mono);color:var(--ink);background:rgba(2,7,12,.75);border:1px solid var(--line);border-radius:10px;padding:10px 12px;max-width:100%;min-height:42px}
+.glass textarea{width:100%;min-height:128px}
+.glass label{font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:inline-flex;flex-direction:column;gap:5px}
+.row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.box{border:1px solid var(--line2);border-radius:14px;padding:14px 16px;background:rgba(2,7,12,.5);min-width:0}
+.box h4{font:500 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+pre{font:500 12.5px/1.55 var(--mono);color:var(--ink);margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.wall svg{width:100%;height:auto;display:block}
+.wall rect{cursor:pointer;transition:opacity .15s}
+.wall rect:hover{opacity:.7}
+.key{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 0 0;font:500 11.5px/1.4 var(--mono);color:var(--muted)}
+.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* PROOF + THE HONEST EXPANDER */
+.proof{text-align:center}
+.proof .hl{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(38px,8vw,88px);line-height:1;letter-spacing:-.02em;margin:0}
+.proof .hl .a{color:var(--muted)}.proof .hl .b{color:var(--cyan)}
+.proof .sub2{color:var(--soft);margin:24px auto 0;max-width:42ch;font-size:16px}
+.links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+.plink{font-family:var(--mono);font-size:13px;text-decoration:none;color:var(--ink);border:1px solid var(--line);padding:11px 18px;border-radius:999px;transition:.18s;min-height:44px;display:inline-flex;align-items:center}
+.plink:hover{border-color:var(--cyan);color:var(--cyan)}
+details.honest{max-width:680px;margin:22px auto 0;border:1px solid var(--line2);border-radius:14px;background:#040b13;text-align:left}
+details.honest:first-of-type{margin-top:52px}
+details.honest summary{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding:16px 20px;cursor:pointer;list-style:none;min-height:48px}
+details.honest summary::-webkit-details-marker{display:none}
+details.honest summary::before{content:"+ ";color:var(--cyan)}
+details.honest[open] summary::before{content:"– "}
+details.honest .in{padding:0 20px 20px;color:var(--soft);font-size:14px;line-height:1.6}
+details.honest .in p{margin:0 0 10px}
+details.honest .in b{color:var(--ink)}
+details.honest .in a{color:var(--cyan)}
+
+footer{border-top:1px solid var(--line2);padding-block:46px;position:relative;z-index:2}
+.frow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-size:22px}
+.taglist{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.9;letter-spacing:.02em}
+.taglist span{color:var(--cyan)}
+.fnote{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:14px;letter-spacing:.02em;line-height:1.8}
+.fnote a{color:var(--soft)}
+
+/* MOTION */
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media(max-width:860px){.acts{grid-template-columns:repeat(2,1fr)}.wins{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.stats{grid-template-columns:1fr;gap:40px}.two{grid-template-columns:1fr}.hero-shade{background:linear-gradient(180deg,rgba(2,7,12,.2) 0%,rgba(2,7,12,.82) 62%)}.hero{align-items:flex-end}.hero .wrap{padding-block:9vh}}
+@media(max-width:680px){.acts,.acts.two{grid-template-columns:1fr}.srow{grid-template-columns:48px minmax(0,1fr);padding:14px 16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}.tag.gd{animation:none}.btn,.act{transition:none}}
+/* this build's own styles, for its own content, which now sits behind a click or inside the glass */
+#gem{position:relative;display:block;width:100%;height:min(68vh,560px);touch-action:none;cursor:grab;border-radius:14px;background:#02070c;margin:0 0 16px}
+.legacy{font-size:15px;line-height:1.6;color:var(--ink)}
+.legacy{--bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd; --lume:#5ef2e4; --amber:#f2b05e; --red:#ff6b6b; --abyss:#000; --body:'Hanken Grotesk',system-ui,sans-serif; --mono:ui-monospace,'JetBrains Mono',monospace;}
+.legacy{--bg:#02070c; --panel:#070f16; --edge:#17242e; --ink:#dfe8ee; --ink-2:#9fb0bd; --abyss:#000;}
+.legacy h2{font:700 25px/1.1 var(--body);margin:0 0 14px;letter-spacing:-.01em}
+.legacy h2 em{font-style:italic;color:var(--lume)}
+.legacy h3{font:600 16px/1.2 var(--mono);margin:18px 0 8px}
+.legacy .panel{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:22px;margin:16px 0}
+.legacy .kicker{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0}
+.legacy .lead{font-size:18px;color:var(--ink);margin:0 0 18px}
+.legacy .tags{font:500 12px/1.6 var(--mono);color:var(--ink-2)}
+.legacy .small{font:500 13px/1.55 var(--mono);color:var(--ink-2)}
+.legacy .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.legacy button{font:600 14px/1 var(--body);color:#012;background:var(--lume);border:0;padding:13px 20px;cursor:pointer;border-radius:3px;min-height:40px}
+.legacy button:hover{filter:brightness(1.08)}
+.legacy button:disabled{opacity:.5;cursor:default}
+.legacy button.quiet{background:transparent;color:var(--ink);border:1px solid var(--edge)}
+.legacy code{font:500 13px var(--mono);background:rgba(94,242,228,.08);padding:1px 5px;border-radius:3px}
+.legacy ol,.legacy ul{padding-left:20px}
+.legacy li{margin:5px 0}
+.legacy table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono);margin:8px 0}
+.legacy th,.legacy td{border:1px solid var(--edge);padding:7px 10px;text-align:left}
+.legacy th{color:var(--ink-2);font-weight:600}
+.legacy td.num,.legacy th.num{text-align:right}
+.legacy .wrap{overflow-x:auto}
+.legacy .pass{color:var(--lume)}
+.legacy .fail{color:var(--red);font-weight:600}
+.legacy .soft{color:var(--amber)}
+.legacy .pend{color:var(--ink-2)}
+.legacy .proven{color:var(--lume)}
+.legacy .grounded{color:var(--amber)}
 #glass{width:100%;height:320px;border:1px solid var(--edge);border-radius:6px;background:#02070c;display:block;margin:12px 0}
-.ledger{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0;font:500 13px/1.3 var(--mono)}
-.ledger b{display:block;font:700 22px/1 var(--body);color:var(--lume)}
-.key{font:500 12px/1.8 var(--mono);color:var(--ink-2)}.key i{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:5px}
-details{border-top:1px solid var(--edge);padding:8px 0}summary{cursor:pointer;font-weight:600;min-height:26px}
-footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:500 12px/1.7 var(--mono);border-top:1px solid var(--edge)}
-.diagram{font:500 13px/1.7 var(--mono);color:var(--ink);background:rgba(94,242,228,.04);border:1px solid var(--edge);border-radius:6px;padding:14px;overflow-x:auto;white-space:pre}
+.legacy .ledger{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0;font:500 13px/1.3 var(--mono)}
+.legacy .ledger b{display:block;font:700 22px/1 var(--body);color:var(--lume)}
+.legacy .key{font:500 12px/1.8 var(--mono);color:var(--ink-2)}
+.legacy .key i{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.legacy details{border-top:1px solid var(--edge);padding:8px 0}
+.legacy summary{cursor:pointer;font-weight:600;min-height:26px}
+.legacy .diagram{font:500 13px/1.7 var(--mono);color:var(--ink);background:rgba(94,242,228,.04);border:1px solid var(--edge);border-radius:6px;padding:14px;overflow-x:auto;white-space:pre}
 </style>
 </head>
 <body>
-<header>
-  <nav aria-label="On this page"><a href="#start">Start</a><a href="#how">How it works</a><a href="#plant">Plant it</a><a href="#numbers">The numbers</a><a href="#blueprint">Blueprint</a><a href="#limits">Limits</a><a href="#buyers">For buyers</a><a href="#paper">White paper</a></nav>
+<header class="hero" id="top">
+  <canvas id="crystal" role="img" aria-label="A crystal of 32 faces. Each lit face is one organ, one cell the model grew, or one probe of the floor: cyan when it held, red when it did not."></canvas>
+  <div class="hero-shade"></div>
+  <div class="wrap">
+    <p class="eyebrow">AI Native Solutions · The Seed</p>
+    <h1>Plant it. It <em>grows.</em></h1>
+    <p class="sub">A handful of small files. Give it a model and an empty workspace, and it grows software one checked cell at a time. What cannot prove itself dissolves.</p>
+    <div class="cta"><a class="btn primary" href="#result">See the result →</a><a class="btn ghost" href="#run">Plant it yourself</a></div>
+  </div>
+  <p class="facet" id="hsFacet" aria-live="polite">3 cells sealed · 2 dissolved and kept on the page · 142 of 142 planted bugs caught · point at a face</p>
 </header>
-<main>
-<section id="top">
-  <p class="kicker">A seed, not a program</p>
-  <h1>Plant it, and it <em>grows itself</em> — verified at every bond.</h1>
-  <p class="lead">The Seed is a handful of small files. Give it a model and an empty workspace, and it grows an organism of software one cell at a time: the model writes each cell, code checks it, and a cell is kept only if it <b>bonds</b> — proven down to an axiom the seed can re-derive itself. A cell that cannot prove itself dissolves. Nothing irreversible happens without a human. What grows is alive, because every part of it was checked.</p>
-  <div class="row"><button id="plant" type="button">Plant it here</button><button id="play" class="quiet" type="button">Show the recorded plant</button><span class="small">the model runs in your browser, on your own chip · about 880 MB, once</span></div>
+
+<section class="pad" id="result">
+  <div class="wrap">
+    <p class="kline reveal">The result</p>
+    <h2 class="claim reveal">A 1B model, planted in a browser tab. <b>It kept only what it could prove.</b></h2>
+    <div class="stats" id="hsReceipts"><div class="stat reveal"><div class="n"><span class="now">3</span><span class="was" style="font-size:.42em"> /5</span></div><div class="lab"><b>Cells sealed, of 5 grown.</b> 1 proven by exact arithmetic, 2 grounded in a cited document.</div><a class="src" href="data/runs/plant.json">receipt: the recorded plant ↗</a></div><div class="stat reveal"><div class="n"><span class="bad">2</span></div><div class="lab"><b>Cells dissolved.</b> The check did not pass, so they were not kept.</div><a class="src" href="data/runs/plant.json">receipt: the recorded plant ↗</a></div><div class="stat reveal"><div class="n"><span class="was">2</span><span class="was" style="font-size:.42em"> /4</span></div><div class="lab"><b>Right on the floor, cold.</b> The same model with no check: the bar a grown cell has to beat.</div><a class="src" href="data/runs/plant.json">receipt: the recorded plant ↗</a></div><div class="stat reveal"><div class="n"><span class="now">yes</span></div><div class="lab"><b>It reproduces.</b> A sealed cell carried the seed and forged the next, which grew and sealed in turn.</div><a class="src" href="data/runs/plant.json">receipt: the recorded plant ↗</a></div><div class="stat reveal"><div class="n"><span class="now">142</span><span class="was" style="font-size:.42em"> /142</span></div><div class="lab"><b>Planted bugs caught.</b> Across its 10 gated files, by their own tests.</div><a class="src" href="data/gates.json">receipt: the gate record ↗</a></div></div>
+  </div>
+</section>
+
+<section class="pad alt" id="organs">
+  <div class="wrap">
+    <p class="kline reveal">How it is built</p>
+    <h2 class="claim reveal">Small files, one job each. <b>Every one mutation-gated.</b></h2>
+    <div class="stack reveal" id="hsClaims"><div class="srow "><div class="d">01</div><div class="nm"><b>The genome</b><span>The four laws every cell runs on itself at birth: describe, verify, prune, know your edge.</span><span class="tag cy">gated 18/18</span></div></div><div class="srow "><div class="d">02</div><div class="nm"><b>The axiom floor</b><span>What the seed re-derives itself, with no model: exact arithmetic and byte-equality. The termination below.</span><span class="tag cy">gated 43/43</span></div></div><div class="srow "><div class="d">03</div><div class="nm"><b>The verifier contract</b><span>The bond-check any verifier plugs into, with its floor and strength; a bond is only as strong as its weakest root.</span><span class="tag cy">gated 14/14</span></div></div><div class="srow "><div class="d">04</div><div class="nm"><b>The loop</b><span>Generate, verify-or-dissolve, crystallise. One turn, one sealed cell.</span><span class="tag cy">gated 10/10</span></div></div><div class="srow "><div class="d">05</div><div class="nm"><b>The terminations</b><span>The floor below, and a human above: nothing irreversible without a grant the seed cannot mint.</span><span class="tag cy">gated 13/13</span></div></div><div class="srow "><div class="d">06</div><div class="nm"><b>The watcher skeleton</b><span>Each layer wraps the one below, with a hard budget, and emits telemetry for the glass.</span><span class="tag cy">gated 6/6</span></div></div><div class="srow "><div class="d">07</div><div class="nm"><b>The forge</b><span>A sealed cell reproduces the next; it never emits debris.</span><span class="tag cy">gated 7/7</span></div></div><div class="srow "><div class="d">08</div><div class="nm"><b>The distillation</b><span>Verified cells to training data; adopt new weights only if they beat the sealed set, and only with a grant.</span><span class="tag cy">gated 6/6</span></div></div><div class="srow "><div class="d">09</div><div class="nm"><b>The plant</b><span>Probe the floor, grow and seal cells, prove the pattern reproduces. Does no irreversible act.</span><span class="tag cy">gated 14/14</span></div></div><div class="srow "><div class="d">10</div><div class="nm"><b>The birth check</b><span>This repository&#39;s own answers when the estate asks it to prove it is a cell.</span><span class="tag cy">gated 11/11</span></div></div></div>
+  </div>
+</section>
+
+<section class="pad proof" id="run">
+  <div class="wrap">
+    <h2 class="hl reveal"><span class="a">Don't trust us.</span><br><span class="b">Re-run it.</span></h2>
+    <p class="sub2 reveal">Plant it on your own graphics chip, or show the recorded plant. Nothing leaves your browser.</p>
+    <div class="glass legacy reveal" style="text-align:left">
+      
+      <div class="row"><button id="plant" type="button">Plant it here</button><button id="play" class="quiet" type="button">Show the recorded plant</button><span class="small">the model runs in your browser, on your own chip · about 880 MB, once</span></div>
   <p id="status" class="small" aria-live="polite">not planted yet</p>
   <div class="ledger" aria-label="What grew">
     <span><b data-bind="n.floor">2/4</b>floor, cold</span>
@@ -72,22 +246,27 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
     <span><b data-bind="n.alive">yes</b>reproduces</span>
   </div>
   <p class="key"><span><i style="background:var(--lume)"></i>proven — exact arithmetic, nothing taken on trust</span><span><i style="background:var(--amber)"></i>grounded — a figure from a document, as true as the document</span></p>
-  <p class="tags">Verify or dissolve · Grows only where a verifier can check · A human at the top, axioms at the bottom.</p>
+      <p id="device" class="small">checking this device…</p>
+  <canvas id="glass" width="820" height="320" aria-label="the plant, drawn as it grows"></canvas>
+  <p id="plantOut" class="small" aria-live="polite">Press <b>Plant it here</b> above. Nothing leaves your browser.</p>
+    </div>
+    
+    <details class="honest reveal"><summary>What this does — and doesn't — claim</summary><div class="in"><p><b>A first cell, not a finished organism.</b> It shows the loop is alive and every bond is checked. It has not grown an estate.</p><p><b>Grounded is not true.</b> A grounded cell cites its document faithfully. If the document is wrong, so is the cell.</p><p><b>It does not train.</b> Its distillation organ gates adoption. It changes no weights.</p><p><b>The model is not pinned.</b> The browser model comes from a public library and is not checked against a fixed fingerprint here.</p><p>The full list is below, under "What this does not prove".</p></div></details>
+  </div>
 </section>
 
-<section class="panel" id="start">
-  <h2>Start <em>here</em></h2>
-  <p><b>The words this page uses.</b> A <b>cell</b> is one unit of work the model does — a sum worked out, a figure cited. A cell <b>bonds</b> when a bond-check passes and the seed can re-derive that verdict itself at an <b>axiom floor</b> (exact arithmetic, or the source's own bytes); one that cannot bond <b>dissolves</b> and is not kept. The <b>strength</b> of a bond is how true it is — <b>proven</b> (exact), or <b>grounded</b> (as true as a document) — and a cell is only as strong as the weakest thing it stands on. The <b>genome</b> is four laws every cell runs on itself at birth: describe, verify, prune, know your edge. To <b>plant</b> is to give the seed a model and a workspace; it <b>probes</b> the floor (what the model gets right <b>cold</b> — on its own, before any checking), <b>grows</b> cells, and the pattern is <b>self-similar</b> — a sealed cell carries the seed, so it reproduces the next cell. The organism is <b>alive</b> when a cell both carries the seed and reproduces a sealed next cell. "<b>Gated</b> 13/13" in the blueprint means a mutation test changed that organ's code 13 ways, one small change at a time, and its tests caught every one.</p>
+<section class="pad alt" id="full">
+  <div class="wrap">
+    <p class="kline reveal">Everything, in full</p>
+    <h2 class="claim reveal">Every detail is still here. <b>One click away.</b></h2>
+    <details class="honest reveal" style="max-width:none"><summary>What it is, in one paragraph</summary><div class="in legacy"><p class="lead">The Seed is a handful of small files. Give it a model and an empty workspace, and it grows an organism of software one cell at a time: the model writes each cell, code checks it, and a cell is kept only if it <b>bonds</b> — proven down to an axiom the seed can re-derive itself. A cell that cannot prove itself dissolves. Nothing irreversible happens without a human. What grows is alive, because every part of it was checked.</p></div></details>
+    <details class="honest reveal" id="start" style="max-width:none"><summary>Start here</summary><div class="in legacy"><p><b>The words this page uses.</b> A <b>cell</b> is one unit of work the model does — a sum worked out, a figure cited. A cell <b>bonds</b> when a bond-check passes and the seed can re-derive that verdict itself at an <b>axiom floor</b> (exact arithmetic, or the source's own bytes); one that cannot bond <b>dissolves</b> and is not kept. The <b>strength</b> of a bond is how true it is — <b>proven</b> (exact), or <b>grounded</b> (as true as a document) — and a cell is only as strong as the weakest thing it stands on. The <b>genome</b> is four laws every cell runs on itself at birth: describe, verify, prune, know your edge. To <b>plant</b> is to give the seed a model and a workspace; it <b>probes</b> the floor (what the model gets right <b>cold</b> — on its own, before any checking), <b>grows</b> cells, and the pattern is <b>self-similar</b> — a sealed cell carries the seed, so it reproduces the next cell. The organism is <b>alive</b> when a cell both carries the seed and reproduces a sealed next cell. "<b>Gated</b> 13/13" in the blueprint means a mutation test changed that organ's code 13 ways, one small change at a time, and its tests caught every one.</p>
   <ol>
     <li><b>Plant it.</b> Press <b>Plant it here</b>. A small model loads into this tab and works through the seed's tasks on your own graphics chip. You watch cells grow on the glass: bright ones proven, warm ones grounded.</li>
     <li><b>Read the glass.</b> The floor is the bar at the base. Each diamond is a sealed cell, in the material of its strength. The glowing branch is the self-similar reproduction: the first cell forging the next.</li>
     <li><b>Check the record.</b> A plant run is published whole. Press <b>Show the recorded plant</b> to see it, and the seed re-grows it with no model to the same result.</li>
-  </ol>
-</section>
-
-<section class="panel" id="how">
-  <h2>How it <em>works</em></h2>
-  <p>One turn grows one cell. The model generates, code verifies or dissolves, and what survives crystallises:</p>
+  </ol></div></details>
+    <details class="honest reveal" id="how" style="max-width:none"><summary>How it works</summary><div class="in legacy"><p>One turn grows one cell. The model generates, code verifies or dissolves, and what survives crystallises:</p>
   <div class="diagram">  task ──▶  MODEL generates a reply
             │
             ▼
@@ -105,72 +284,370 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
     <li><b>Crystallise.</b> A cell seals only if it bonds <em>and</em> passes the genome's four laws — so every sealed cell is a cell, able to be planted again.</li>
     <li><b>Label.</b> Each cell carries its strength, and no cell is ever called stronger than the weakest bond it stands on.</li>
   </ol>
-  <p class="small">The two terminations make growth safe to grant. <b>Below:</b> nothing bonds that does not reduce to a recognised axiom floor. <b>Above:</b> anything irreversible — adopting new weights, publishing, deleting, spending, rewriting the floor — is refused unless a human hands in a one-time grant the seed has no way to issue for itself.</p>
-</section>
-
-<section class="panel" id="plant">
-  <h2>Plant it <em>here</em></h2>
-  <p id="device" class="small">checking this device…</p>
-  <canvas id="glass" width="820" height="320" aria-label="the plant, drawn as it grows"></canvas>
-  <p id="plantOut" class="small" aria-live="polite">Press <b>Plant it here</b> above. Nothing leaves your browser.</p>
-</section>
-
-<section class="panel" id="numbers">
-  <h2>The <em>numbers</em></h2>
-  <p class="small" data-bind="h.source">From the published plant: Llama-3.2-1B-Instruct-q4f16_1-MLC, intel gen-12lp (2026-11-25).</p>
+  <p class="small">The two terminations make growth safe to grant. <b>Below:</b> nothing bonds that does not reduce to a recognised axiom floor. <b>Above:</b> anything irreversible — adopting new weights, publishing, deleting, spending, rewriting the floor — is refused unless a human hands in a one-time grant the seed has no way to issue for itself.</p></div></details>
+    <details class="honest reveal" id="numbers" style="max-width:none"><summary>The numbers</summary><div class="in legacy"><p class="small" data-bind="h.source">From the published plant: Llama-3.2-1B-Instruct-q4f16_1-MLC, intel gen-12lp (2026-11-25).</p>
   <div id="planted"><p>Planted, the seed probed the floor, grew <b>3</b> cells (1 proven, 2 grounded) and dissolved <b>2</b>. A sealed cell carried the seed and forged the next, which grew and sealed in turn: the pattern is self-similar, so the organism is <b class="pass">alive</b>. The seed did nothing irreversible — it asked for no grant.</p></div>
   <h3>The axiom floor, cold</h3>
   <div class="wrap" id="floorTable"><table><thead><tr><th>axiom task</th><th>floor</th><th>model, cold</th></tr></thead><tbody><tr><td>a1</td><td>exact-arithmetic</td><td><span class="pass">right</span></td></tr><tr><td>a2</td><td>exact-arithmetic</td><td><span class="pass">right</span></td></tr><tr><td>a3</td><td>exact-arithmetic</td><td><span class="fail">wrong</span></td></tr><tr><td>b1</td><td>byte-equality</td><td><span class="fail">wrong</span></td></tr></tbody></table></div>
   <h3>The cells it grew</h3>
-  <div class="wrap" id="cellsTable"><table><thead><tr><th>cell</th><th>the model wrote</th><th>bond</th></tr></thead><tbody><tr><td>12 × 11</td><td>132</td><td><span class="proven">proven</span></td></tr><tr><td>144 + 56 - 8</td><td>128</td><td><span class="fail">dissolved</span> <span class="small">(the check did not pass)</span></td></tr><tr><td>25 × 4 × 3</td><td>950</td><td><span class="fail">dissolved</span> <span class="small">(the check did not pass)</span></td></tr><tr><td>cite the unit price</td><td>The unit price is 126 pounds.</td><td><span class="grounded">grounded</span></td></tr><tr><td>cite the daily rate</td><td>The daily rate is 90 pounds.</td><td><span class="grounded">grounded</span></td></tr></tbody></table></div>
-</section>
-
-<section class="panel" id="blueprint">
-  <h2>How it is <em>built</em></h2>
-  <p class="small">"Gated 30/30" means a mutation test changed that organ's code 30 ways, one small change at a time, and its tests caught every one. Nine organs, each a small file with one job, each mutation-gated.</p>
+  <div class="wrap" id="cellsTable"><table><thead><tr><th>cell</th><th>the model wrote</th><th>bond</th></tr></thead><tbody><tr><td>12 × 11</td><td>132</td><td><span class="proven">proven</span></td></tr><tr><td>144 + 56 - 8</td><td>128</td><td><span class="fail">dissolved</span> <span class="small">(the check did not pass)</span></td></tr><tr><td>25 × 4 × 3</td><td>950</td><td><span class="fail">dissolved</span> <span class="small">(the check did not pass)</span></td></tr><tr><td>cite the unit price</td><td>The unit price is 126 pounds.</td><td><span class="grounded">grounded</span></td></tr><tr><td>cite the daily rate</td><td>The daily rate is 90 pounds.</td><td><span class="grounded">grounded</span></td></tr></tbody></table></div></div></details>
+    <details class="honest reveal" id="built" style="max-width:none"><summary>How it is built</summary><div class="in legacy"><p class="small">"Gated 30/30" means a mutation test changed that organ's code 30 ways, one small change at a time, and its tests caught every one. Nine organs, each a small file with one job, each mutation-gated.</p>
   <div class="wrap" id="blueprint"><table><thead><tr><th>organ</th><th>what it is</th><th>proof</th></tr></thead><tbody><tr><td><b>The genome</b><br><span class="small">src/genome.mjs</span></td><td>The four laws every cell runs on itself at birth: describe, verify, prune, know your edge.</td><td><span class="pass">gated 18/18</span></td></tr><tr><td><b>The axiom floor</b><br><span class="small">src/floor.mjs</span></td><td>What the seed re-derives itself, with no model: exact arithmetic and byte-equality. The termination below.</td><td><span class="pass">gated 43/43</span></td></tr><tr><td><b>The verifier contract</b><br><span class="small">src/verifier.mjs</span></td><td>The bond-check any verifier plugs into, with its floor and strength; a bond is only as strong as its weakest root.</td><td><span class="pass">gated 14/14</span></td></tr><tr><td><b>The loop</b><br><span class="small">src/loop.mjs</span></td><td>Generate, verify-or-dissolve, crystallise. One turn, one sealed cell.</td><td><span class="pass">gated 10/10</span></td></tr><tr><td><b>The terminations</b><br><span class="small">src/terminate.mjs</span></td><td>The floor below, and a human above: nothing irreversible without a grant the seed cannot mint.</td><td><span class="pass">gated 13/13</span></td></tr><tr><td><b>The watcher skeleton</b><br><span class="small">src/watcher.mjs</span></td><td>Each layer wraps the one below, with a hard budget, and emits telemetry for the glass.</td><td><span class="pass">gated 6/6</span></td></tr><tr><td><b>The forge</b><br><span class="small">src/forge.mjs</span></td><td>A sealed cell reproduces the next; it never emits debris.</td><td><span class="pass">gated 7/7</span></td></tr><tr><td><b>The distillation</b><br><span class="small">src/distill.mjs</span></td><td>Verified cells to training data; adopt new weights only if they beat the sealed set, and only with a grant.</td><td><span class="pass">gated 6/6</span></td></tr><tr><td><b>The plant</b><br><span class="small">src/plant.mjs</span></td><td>Probe the floor, grow and seal cells, prove the pattern reproduces. Does no irreversible act.</td><td><span class="pass">gated 14/14</span></td></tr></tbody></table></div>
-  <p class="small">Below the organs: the axiom floor (<code>src/floor.mjs</code>) is the termination the whole thing reduces to. Above them: a person. The seed holds no key, mints no grant, and does nothing it cannot take back without one.</p>
-</section>
-
-<section class="panel" id="limits">
-  <h2>What this does <em>not</em> prove</h2>
-  <ul>
+  <p class="small">Below the organs: the axiom floor (<code>src/floor.mjs</code>) is the termination the whole thing reduces to. Above them: a person. The seed holds no key, mints no grant, and does nothing it cannot take back without one.</p></div></details>
+    <details class="honest reveal" id="limits" style="max-width:none"><summary>What this does not prove</summary><div class="in legacy"><ul>
     <li><b>It is a first cell, not a finished organism.</b> The seed grows and seals real cells and proves the pattern reproduces. It does not claim to have grown the whole estate; it claims the loop is alive and every bond is checked.</li>
     <li><b>Grounded is not true.</b> A grounded cell cites a document faithfully. If the document is wrong, the answer is wrong, and it is still grounded. The label is the promise, not a guarantee of the world.</li>
     <li><b>The floor is small on purpose.</b> Two axiom floors ship — exact arithmetic and byte-equality. The seed carries the <em>contract</em> any other verifier plugs into (with its own floor and honest strength); it does not carry the whole estate's verifiers. That is what "minimal and transmissible" means.</li>
-    <li><b>Depth 5 is not built.</b> The distillation organ harvests verified cells and gates adoption, but it does not train weights, and it never adopts without beating the sealed set and a human grant.</li>
+    <li><b>The seed does not train.</b> Its distillation organ harvests verified cells and gates adoption; it changes no weights, and it never adopts without beating the sealed set and a human grant. The training itself is a separate build, <a href="https://sjgant80-hub.github.io/the-distillation/">The Distillation</a>.</li>
     <li><b>The model is not pinned.</b> The browser model comes from the public WebLLM library; this page does not check it against a fixed fingerprint, so a changed file upstream would not be caught here.</li>
-  </ul>
-</section>
-
-<section class="panel" id="buyers">
-  <h2>For <em>buyers</em></h2>
-  <p>Most "autonomous" AI is a loop with nothing checking it: it generates, and you hope. The expensive failure is the confident output nobody caught. The Seed is the opposite shape — a growth loop where <b>every</b> cell is checked against something you can re-derive yourself, kept only if it proves out, and labelled exactly how true it is.</p>
+  </ul></div></details>
+    <details class="honest reveal" id="buyers" style="max-width:none"><summary>For buyers</summary><div class="in legacy"><p>Most "autonomous" AI is a loop with nothing checking it: it generates, and you hope. The expensive failure is the confident output nobody caught. The Seed is the opposite shape — a growth loop where <b>every</b> cell is checked against something you can re-derive yourself, kept only if it proves out, and labelled exactly how true it is.</p>
   <ul>
     <li><b>For the board.</b> The seed terminates at both ends: below, nothing is kept that it cannot re-derive from first principles itself; above, nothing irreversible — adopting weights, publishing, deleting, spending — happens unless a person hands in a one-time grant the seed has no way to issue for itself. A system that cannot persist an unverified result, and cannot act irreversibly without a human, is one you can grant real autonomy without granting real risk.</li>
     <li><b>For engineering.</b> It is small, pure, and transmissible — a handful of files you plant in your own workspace with your own model. Plug in your own verifiers through one contract; each declares its floor and its strength.</li>
     <li><b>For security and ownership.</b> It runs on your hardware. The model and the work stay on the device. Nothing is sent anywhere, and the published runs are re-runnable, so you check the claims yourself rather than trust ours.</li>
   </ul>
-  <p class="small">Supplied by <a href="https://www.ai-nativesolutions.com">AI Native Solutions</a>; support is agreed per deployment, in each deployment's agreement.</p>
-</section>
-
-<section class="panel" id="paper">
-  <h2>White <em>paper</em>: a seed, not a program</h2>
-  <p><b>The problem.</b> A program does one job and stops. An AI left to grow on its own does not stop, and nothing tells it which of its own steps was wrong, so it compounds its mistakes as readily as its successes. Neither is what you want from a system meant to build.</p>
+  <p class="small">Supplied by <a href="https://www.ai-nativesolutions.com">AI Native Solutions</a>; support is agreed per deployment, in each deployment's agreement.</p></div></details>
+    <details class="honest reveal" id="paper" style="max-width:none"><summary>White paper: a seed, not a program</summary><div class="in legacy"><p><b>The problem.</b> A program does one job and stops. An AI left to grow on its own does not stop, and nothing tells it which of its own steps was wrong, so it compounds its mistakes as readily as its successes. Neither is what you want from a system meant to build.</p>
   <p><b>The idea.</b> Carry the whole pattern of a verified, self-growing organism in the smallest block that still holds it, and make every fusion verify-or-dissolve. The model generates; code verifies down to an axiom the seed re-derives itself; what proves out crystallises into a cell; the cell carries the seed and reproduces. Growth adds up instead of washing out, because nothing unverified is ever kept.</p>
   <p><b>How it is trusted.</b> Every organ is pure and total — a hostile input returns a refusal, never a throw — and every organ is mutation-gated: its tests must catch every small change to its code. The whole thing terminates at both ends: an axiom floor below that nothing bonds without reducing to, and a person above that no irreversible act passes without.</p>
   <p><b>What this page tests.</b> That a small model, planted in a browser tab with this seed, probes a floor, grows and seals real cells of two strengths, and reproduces the pattern — a first cell, alive — with no number written down that a recorded, re-runnable plant did not measure.</p>
   <p><b>What it does not show.</b> A finished organism. The seed is honest about scale: the loop is alive and every bond is checked; the estate grows from here, cell by cell, each one sealed before the next.</p>
   <p><b>The one rule.</b> Verify or dissolve. Nothing persists that cannot prove itself, and nothing is called truer than what it stands on.</p>
   <p class="small">The records: <a href="data/runs/plant.json">the recorded plant run</a>, <a href="data/gates.json">the mutation gates</a>.</p>
-  <div id="walk"><h3>A simulated buyer walk</h3><p class="small">A simulated buyer walk: a local 7B model played four buyers (CFO, CTO, COO, owner-manager) and read this page's text cold. It is a model's first-pass audit, not a customer's opinion. Kar checked every gap against the page and pressed every control by hand (Plant it here grew a real run; Show the recorded plant replays it). The real gaps are below, each with what was changed. Not changed: that 'Plant it here is not clickable' (the walk reads text only; the button works and was tested), and lines already explained in the limits.</p><details><summary>The CFO of a 400-person firm: followed the result; tripped on undefined words</summary><ul><li>&quot;The two terminations make growth safe to grant&quot; is vague about what they are <span class="small">→ the For-the-board bullet now names both: below, nothing kept it cannot re-derive itself; above, nothing irreversible without a one-time human grant</span></li><li>&quot;the axiom floor, cold&quot; uses &quot;cold&quot; without defining it <span class="small">→ the words list now defines cold: what the model gets right on its own, before any checking</span></li></ul></details><details><summary>The CTO who also owns security: wanted the human-in-the-loop and the organ gates spelled out</summary><ul><li>&quot;a grant the seed cannot mint&quot; — what does mint mean? <span class="small">→ reworded throughout to &quot;a one-time grant the seed has no way to issue for itself&quot;</span></li><li>&quot;The organism is alive&quot; is a metaphor left unexplained <span class="small">→ the words list now defines alive: a cell both carries the seed and reproduces a sealed next cell</span></li></ul></details><details><summary>The COO who runs the teams that would use it: read the blueprint gates without knowing what gated meant</summary><ul><li>&quot;gated 13/13&quot;, &quot;gated 6/6&quot; without context <span class="small">→ the words list now says what gated means (a mutation test changed the organ's code every way and the tests caught each)</span></li></ul></details><details><summary>The owner-manager of a 12-person business, no technical staff: needed the plant action and the terminations in plainer words</summary><ul><li>&quot;the floor below, and a human above&quot; was abstract for a non-technical reader <span class="small">→ the board bullet now puts both terminations in plain words and names the irreversible acts</span></li></ul></details></div>
+  <div id="walk"><h3>A simulated buyer walk</h3><p class="small">A simulated buyer walk: a local 7B model played four buyers (CFO, CTO, COO, owner-manager) and read this page's text cold. It is a model's first-pass audit, not a customer's opinion. Kar checked every gap against the page and pressed every control by hand (Plant it here grew a real run; Show the recorded plant replays it). The real gaps are below, each with what was changed. Not changed: that 'Plant it here is not clickable' (the walk reads text only; the button works and was tested), and lines already explained in the limits.</p><details><summary>The CFO of a 400-person firm: followed the result; tripped on undefined words</summary><ul><li>&quot;The two terminations make growth safe to grant&quot; is vague about what they are <span class="small">→ the For-the-board bullet now names both: below, nothing kept it cannot re-derive itself; above, nothing irreversible without a one-time human grant</span></li><li>&quot;the axiom floor, cold&quot; uses &quot;cold&quot; without defining it <span class="small">→ the words list now defines cold: what the model gets right on its own, before any checking</span></li></ul></details><details><summary>The CTO who also owns security: wanted the human-in-the-loop and the organ gates spelled out</summary><ul><li>&quot;a grant the seed cannot mint&quot; — what does mint mean? <span class="small">→ reworded throughout to &quot;a one-time grant the seed has no way to issue for itself&quot;</span></li><li>&quot;The organism is alive&quot; is a metaphor left unexplained <span class="small">→ the words list now defines alive: a cell both carries the seed and reproduces a sealed next cell</span></li></ul></details><details><summary>The COO who runs the teams that would use it: read the blueprint gates without knowing what gated meant</summary><ul><li>&quot;gated 13/13&quot;, &quot;gated 6/6&quot; without context <span class="small">→ the words list now says what gated means (a mutation test changed the organ's code every way and the tests caught each)</span></li></ul></details><details><summary>The owner-manager of a 12-person business, no technical staff: needed the plant action and the terminations in plainer words</summary><ul><li>&quot;the floor below, and a human above&quot; was abstract for a non-technical reader <span class="small">→ the board bullet now puts both terminations in plain words and names the irreversible acts</span></li></ul></details></div></div></details>
+  </div>
 </section>
-</main>
+
 <footer>
-  The Seed · built by Kar · MIT licence, holder Simon Gant · supplied by AI Native Solutions · <a href="https://github.com/sjgant80-hub/the-seed">source</a><br>
-  AI you own. Proof you can re-run.
+  <div class="wrap frow">
+    <div><div class="brand">The Seed</div><div class="fnote">The Seed · built by Kar · MIT licence, holder Simon Gant · supplied by AI Native Solutions · <a href="https://github.com/sjgant80-hub/the-seed">source</a><br>
+  AI you own. Proof you can re-run.</div></div>
+    <div class="taglist"><span>›</span> AI you own. Proof you can re-run.<br><span>›</span> A small model that says "I can't tell."<br><span>›</span> Nothing leaves your browser.</div>
+  </div>
 </footer>
 <script type="module">
+// vendor/house/crystal.js, inlined byte for byte (imports read the scopes above; export removed)
+const CRYSTAL = (() => {
+// crystal.js — the house hero: a living crystal, drawn by one fragment shader. No library is fetched.
+//
+// It is a real solid, not a picture of one: a 32-faced gem (an icosahedron cut by a dodecahedron) that every pixel's
+// ray is intersected with exactly. Light is bent into the body, carried through it, turned back where it cannot leave
+// and bent out again, once for each of three colours, so the facets split light the way glass does. The body absorbs
+// as it carries; its edges burn; a slow lattice of light moves inside it.
+//
+// And it is bound to data. Each of the 32 faces holds a state the page gives it: dark, proven (cyan), sealing (gold,
+// breathing) or failed (red, kept). A page lights a face only for a receipt it has re-derived, so the crystal is the
+// record, not decoration. A face can be pointed at and pressed: the page is told which one.
+//
+//   mount(canvas, options) → { setFaces, setEnergy, setCentre, onHover, onPick, redraw, destroy, FACES }   or null
+// It decides nothing. With no WebGL the canvas is left as it is (the page's own background shows) and null is returned.
+
+const FACES = 32;
+const STATE = { dark: 0, proven: 1, sealing: 2, failed: 3 };
+const PHI = (1 + Math.sqrt(5)) / 2;
+const unit = (v) => { const l = Math.hypot(v[0], v[1], v[2]); return [v[0] / l, v[1] / l, v[2] / l]; };
+// ten icosahedron normals, then six dodecahedron normals; each stands for a pair of opposite faces (i and i + 16)
+const NORMALS = [[1, 1, 1], [-1, 1, 1], [1, -1, 1], [1, 1, -1], [0, 1, PHI + 1], [0, -1, PHI + 1], [PHI + 1, 0, 1], [-PHI - 1, 0, 1], [1, PHI + 1, 0], [-1, PHI + 1, 0], [0, PHI, 1], [0, -PHI, 1], [1, 0, PHI], [-1, 0, PHI], [PHI, 1, 0], [-PHI, 1, 0]].map(unit);
+const R_ICOSA = 1.2, R_CUT = 1.37, CAMERA = 5.2, FOV = 0.8284;
+
+const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+const FRAG = `
+precision highp float;
+uniform vec2 uRes; uniform float uTime; uniform mat3 uRot; uniform mat3 uInv; uniform vec3 uCen;
+uniform vec3 uN[16]; uniform float uR[16]; uniform float uState[32]; uniform float uEnergy; uniform float uHot;
+const vec3 CYAN = vec3(0.286, 0.910, 0.784); const vec3 GOLD = vec3(1.0, 0.812, 0.416); const vec3 RED = vec3(1.0, 0.42, 0.42);
+float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+float hash3(vec3 p){ p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float noise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(hash3(i), hash3(i + vec3(1,0,0)), f.x), mix(hash3(i + vec3(0,1,0)), hash3(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(hash3(i + vec3(0,0,1)), hash3(i + vec3(1,0,1)), f.x), mix(hash3(i + vec3(0,1,1)), hash3(i + vec3(1,1,1)), f.x), f.y), f.z); }
+vec3 tint(float s){ return s < 0.5 ? vec3(0.0) : s < 1.5 ? CYAN : s < 2.5 ? GOLD : RED; }
+// the solid: sixteen pairs of planes. Where a ray enters and leaves, through which faces, and how near an edge.
+bool solid(vec3 ro, vec3 rd, out float tN, out float tF, out vec3 nN, out vec3 nF, out float sN, out float sF, out float eN, out float eF, out float iN){
+  tN = -1e9; tF = 1e9; float tN2 = -1e9; float tF2 = 1e9; nN = vec3(0.0); nF = vec3(0.0); sN = 0.0; sF = 0.0; iN = -1.0;
+  for (int i = 0; i < 16; i++){
+    vec3 n = uN[i]; float dn = dot(rd, n); dn = abs(dn) < 1e-5 ? 1e-5 : dn; float po = dot(ro, n);
+    float tp = (uR[i] - po) / dn; float tm = (-uR[i] - po) / dn;
+    float ta; float tb; vec3 na; vec3 nb; float sa; float sb; float ia;
+    if (dn < 0.0) { ta = tp; na = n; sa = uState[i]; ia = float(i); tb = tm; nb = -n; sb = uState[i + 16]; }
+    else { ta = tm; na = -n; sa = uState[i + 16]; ia = float(i) + 16.0; tb = tp; nb = n; sb = uState[i]; }
+    if (ta > tN) { tN2 = tN; tN = ta; nN = na; sN = sa; iN = ia; } else if (ta > tN2) { tN2 = ta; }
+    if (tb < tF) { tF2 = tF; tF = tb; nF = nb; sF = sb; } else if (tb < tF2) { tF2 = tb; }
+  }
+  eN = tN - tN2; eF = tF2 - tF;
+  return tN < tF && tF > 0.0;
+}
+// what the crystal reflects and bends: a dark sea, three lamps, a horizon, slow bars of light
+vec3 world(vec3 d){
+  vec3 c = mix(vec3(0.0006, 0.003, 0.006), vec3(0.006, 0.028, 0.042), pow(clamp(d.y * 0.5 + 0.5, 0.0, 1.0), 1.5));
+  c += CYAN * 2.2 * pow(max(dot(d, normalize(vec3(0.6, 0.7, 0.4))), 0.0), 26.0);
+  c += vec3(0.6, 0.8, 1.0) * 1.3 * pow(max(dot(d, normalize(vec3(-0.7, 0.3, 0.5))), 0.0), 60.0);
+  c += GOLD * 0.55 * pow(max(dot(d, normalize(vec3(0.1, -0.8, 0.5))), 0.0), 28.0);
+  c += vec3(0.15, 0.5, 0.45) * exp(-abs(d.y) * 14.0) * 0.12;
+  float bars = smoothstep(0.9, 1.0, sin(d.x * 9.0 + d.z * 5.0 + uTime * 0.07) * 0.5 + 0.5);
+  return c + vec3(0.5, 0.9, 0.85) * bars * 0.22 * smoothstep(-0.2, 0.6, d.y);
+}
+// one colour of light through the body: bent in, carried, turned back once if it cannot leave, bent out
+vec3 through(vec3 p, vec3 rd, vec3 n, float ior, out float path, out float sX, out float eX){
+  vec3 d = refract(rd, n, 1.0 / ior); vec3 o = p - n * 0.003; vec3 leave = d; path = 0.0; sX = 0.0; eX = 1.0;
+  for (int b = 0; b < 2; b++){
+    float tN; float tF; vec3 nN; vec3 nF; float sN; float sF; float eN; float eF; float iN;
+    solid(o, d, tN, tF, nN, nF, sN, sF, eN, eF, iN);
+    path += max(tF, 0.0);
+    if (b == 0) { sX = sF; eX = eF; }
+    vec3 r = refract(d, -nF, ior);
+    if (dot(r, r) > 0.0) { leave = r; break; }
+    vec3 q = o + d * tF; d = reflect(d, -nF); o = q - nF * 0.003; leave = d;
+  }
+  return leave;
+}
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
+  vec3 ro = vec3(0.0, 0.0, ${CAMERA.toFixed(1)}); vec3 rd = normalize(vec3(uv * ${FOV.toFixed(4)}, -1.0));
+  // the room: depth, a breath of light round the crystal, three drifts of dust
+  vec3 col = mix(vec3(0.0002, 0.0008, 0.0016), vec3(0.0016, 0.0042, 0.0085), exp(-length(uv - vec2(0.36, 0.3)) * 1.9));
+  float near = length(cross(rd, uCen - ro));
+  col += CYAN * 0.010 * uEnergy * exp(-near * near * 0.42);
+  for (int k = 0; k < 3; k++){
+    float sc = 14.0 + float(k) * 11.0; vec2 g = uv * sc + vec2(uTime * 0.010 * float(k + 1), uTime * 0.006);
+    vec2 id = floor(g); vec2 f = fract(g) - 0.5; float h = hash(id + float(k) * 17.0);
+    vec2 o = vec2(hash(id + 3.1), hash(id + 7.7)) - 0.5; float tw = 0.5 + 0.5 * sin(uTime * (0.6 + h * 2.0) + h * 40.0);
+    col += vec3(0.56, 0.91, 0.85) * smoothstep(0.045, 0.0, length(f - o * 0.7)) * step(0.9, h) * tw * (0.22 - 0.05 * float(k));
+  }
+  vec3 lo = uInv * (ro - uCen); vec3 ld = uInv * rd;
+  float tN; float tF; vec3 nN; vec3 nF; float sN; float sF; float eN; float eF; float iN;
+  if (solid(lo, ld, tN, tF, nN, nF, sN, sF, eN, eF, iN) && tN > 0.0){
+    vec3 p = lo + ld * tN; float facing = max(dot(-ld, nN), 0.0); float fres = pow(1.0 - facing, 3.0);
+    float pa; float sa; float ea; float pathG; float sX; float eX;
+    vec3 dr = through(p, ld, nN, 1.41, pa, sa, ea);
+    vec3 dg = through(p, ld, nN, 1.45, pathG, sX, eX);
+    vec3 db = through(p, ld, nN, 1.50, pa, sa, ea);
+    vec3 bent = vec3(world(uRot * dr).r, world(uRot * dg).g, world(uRot * db).b);
+    vec3 body = exp(-pathG * vec3(1.5, 0.38, 0.52) * 0.8);
+    vec3 c = mix(bent * body, world(uRot * reflect(ld, nN)), 0.06 + 0.9 * fres);
+    vec3 cN = tint(sN); vec3 cX = tint(sX);
+    float breath = (sN > 1.5 && sN < 2.5) ? 0.6 + 0.4 * sin(uTime * 1.8 + iN) : 1.0;
+    c += cN * (0.012 + 0.10 * fres) * breath * uEnergy;                 // a lit face glows from within
+    c += cX * 0.03 * body.g * uEnergy;                                  // the far side, seen through the body
+    float edge = exp(-eN * 90.0) + 0.35 * exp(-eX * 60.0) * body.g;      // edges burn
+    c += mix(vec3(0.16, 0.55, 0.48), cN, step(0.5, sN)) * edge * (0.35 + 0.45 * uEnergy);
+    vec3 mid = p + refract(ld, nN, 1.0 / 1.45) * pathG * 0.5;           // the lattice of light inside
+    c += CYAN * pow(noise(mid * 3.2 + vec3(0.0, uTime * 0.12, uTime * 0.05)), 3.0) * 0.05 * uEnergy;
+    c += vec3(0.5, 0.9, 0.85) * (1.0 - step(0.5, abs(iN - uHot))) * 0.07;         // the face under the pointer
+    col = c;
+  }
+  col *= 1.0 - 0.5 * pow(length(uv * vec2(0.75, 1.0)), 2.2);
+  col = 1.0 - exp(-col * 2.4);
+  col = pow(col, vec3(0.4545)); col = mix(col, col * col * (3.0 - 2.0 * col), 0.65) + (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.014;
+  gl_FragColor = vec4(col, 1.0);
+}`;
+
+const mul = (m, v) => [m[0] * v[0] + m[3] * v[1] + m[6] * v[2], m[1] * v[0] + m[4] * v[1] + m[7] * v[2], m[2] * v[0] + m[5] * v[1] + m[8] * v[2]];
+// rot(yaw, pitch) → the turn of the crystal as a column-major 3×3, and its inverse (its transpose)
+function rot(yaw, pitch) {
+  const cy = Math.cos(yaw), sy = Math.sin(yaw), cx = Math.cos(pitch), sx = Math.sin(pitch);
+  const m = [cy, sx * sy, -cx * sy, 0, cx, sx, sy, -sx * cy, cx * cy];
+  return { m, inv: [m[0], m[3], m[6], m[1], m[4], m[7], m[2], m[5], m[8]] };
+}
+// faceAt(u, v, aspect, turn, centre, cut) → the face (0…31) a ray through that point of the screen enters by, or -1.
+// u, v run 0…1 from the top left. The same sum the shader does, so the page and the picture agree on which face it is.
+function faceAt(u, v, aspect, turn, centre, cut) {
+  const x = (u - 0.5) * aspect * FOV, y = (0.5 - v) * FOV, l = Math.hypot(x, y, 1);
+  const rd = mul(turn.inv, [x / l, y / l, -1 / l]), ro = mul(turn.inv, [-centre[0], -centre[1], CAMERA - centre[2]]);
+  let tN = -1e9, tF = 1e9, face = -1;
+  for (let i = 0; i < 16; i++) {
+    const n = NORMALS[i], r = i < 10 ? R_ICOSA : cut;
+    let dn = rd[0] * n[0] + rd[1] * n[1] + rd[2] * n[2]; if (Math.abs(dn) < 1e-5) dn = 1e-5;
+    const po = ro[0] * n[0] + ro[1] * n[1] + ro[2] * n[2], tp = (r - po) / dn, tm = (-r - po) / dn;
+    const ta = dn < 0 ? tp : tm, tb = dn < 0 ? tm : tp;
+    if (ta > tN) { tN = ta; face = dn < 0 ? i : i + 16; }
+    if (tb < tF) tF = tb;
+  }
+  return tN < tF && tN > 0 ? face : -1;
+}
+
+function mount(canvas, options) {
+  const opt = options || {};
+  let gl = null;
+  try { gl = canvas && canvas.getContext ? canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance' }) : null; } catch { gl = null; }
+  if (!gl) return null;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; };
+  const vs = sh(gl.VERTEX_SHADER, VERT), fs = sh(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) return null;
+  const prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
+  gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const a = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+  const U = (n) => gl.getUniformLocation(prog, n);
+  const u = { res: U('uRes'), time: U('uTime'), rot: U('uRot'), inv: U('uInv'), cen: U('uCen'), n: U('uN[0]'), r: U('uR[0]'), state: U('uState[0]'), energy: U('uEnergy'), hot: U('uHot') };
+  gl.uniform3fv(u.n, new Float32Array(NORMALS.flat()));
+  const still = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S = { faces: new Float32Array(FACES), energy: opt.energy ?? 0.8, target: opt.energy ?? 0.8, centre: [0, 0, 0], yaw: 0.5, pitch: 0.18, vy: 0, vp: 0, drag: null, hot: -1, scale: 1, ms: 16, t: 0, last: 0, seen: true, raf: 0, dead: false, hover: null, pick: null, turn: rot(0.5, 0.18), cut: R_CUT };
+  const size = () => {
+    const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1, d = Math.min(1.5, globalThis.devicePixelRatio || 1) * S.scale;
+    const W = Math.max(2, Math.round(w * d)), H = Math.max(2, Math.round(h * d));
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    S.centre = typeof opt.centre === 'function' ? opt.centre(w, h) : [w > 820 ? 1.25 : 0, w > 820 ? 0 : 0.55, 0];
+  };
+  const draw = () => {
+    size();
+    S.turn = rot(S.yaw, S.pitch);
+    S.cut = R_CUT + 0.07 * Math.sin(S.t * 0.35);                        // the cut faces open and close: it breathes
+    const r = new Float32Array(16); for (let i = 0; i < 16; i++) r[i] = i < 10 ? R_ICOSA : S.cut;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(u.res, canvas.width, canvas.height); gl.uniform1f(u.time, S.t); gl.uniformMatrix3fv(u.rot, false, new Float32Array(S.turn.m)); gl.uniformMatrix3fv(u.inv, false, new Float32Array(S.turn.inv));
+    gl.uniform3f(u.cen, S.centre[0], S.centre[1], S.centre[2]); gl.uniform1fv(u.r, r); gl.uniform1fv(u.state, S.faces); gl.uniform1f(u.energy, S.energy); gl.uniform1f(u.hot, S.hot);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  };
+  const frame = (now) => {
+    if (S.dead) return;
+    S.raf = requestAnimationFrame(frame);
+    if (!S.seen || (typeof document !== 'undefined' && document.hidden)) { S.last = now; return; }
+    const dt = Math.min(0.05, (now - (S.last || now)) / 1000); S.last = now;
+    S.ms += ((dt * 1000) - S.ms) * 0.08;
+    if (S.ms > 30 && S.scale > 0.45) S.scale *= 0.92; else if (S.ms < 14 && S.scale < 1) S.scale = Math.min(1, S.scale * 1.03);
+    if (!still) { S.t += dt; if (!S.drag) { S.yaw += dt * 0.16 + S.vy; S.pitch += (0.18 + 0.12 * Math.sin(S.t * 0.22) - S.pitch) * 0.02 + S.vp; S.vy *= 0.94; S.vp *= 0.94; } }
+    S.energy += (S.target - S.energy) * 0.04;
+    draw();
+  };
+  const where = (e) => { const b = canvas.getBoundingClientRect(); return [(e.clientX - b.left) / b.width, (e.clientY - b.top) / b.height, b.width / b.height]; };
+  const face = (e) => { const [x, y, asp] = where(e); return faceAt(x, y, asp, S.turn, S.centre, S.cut); };
+  const down = (e) => { S.drag = { x: e.clientX, y: e.clientY, moved: 0 }; };
+  const move = (e) => {
+    if (S.drag) { const dx = e.clientX - S.drag.x, dy = e.clientY - S.drag.y; S.drag.x = e.clientX; S.drag.y = e.clientY; S.drag.moved += Math.abs(dx) + Math.abs(dy); S.yaw += dx * 0.006; S.pitch = Math.max(-1.2, Math.min(1.2, S.pitch + dy * 0.006)); S.vy = dx * 0.0006; S.vp = 0; if (still) draw(); return; }
+    const f = face(e); if (f !== S.hot) { S.hot = f; canvas.style.cursor = f >= 0 ? 'pointer' : 'grab'; if (S.hover) S.hover(f, e); if (still) draw(); }
+  };
+  const up = (e) => { const d = S.drag; S.drag = null; if (d && d.moved < 6 && S.pick) { const f = face(e); if (f >= 0) S.pick(f, e); } };
+  const leave = () => { S.drag = null; if (S.hot !== -1) { S.hot = -1; if (S.hover) S.hover(-1, null); if (still) draw(); } };
+  canvas.addEventListener('pointerdown', down); canvas.addEventListener('pointermove', move); canvas.addEventListener('pointerup', up); canvas.addEventListener('pointerleave', leave);
+  canvas.style.cursor = 'grab'; canvas.style.touchAction = 'pan-y';
+  let io = null;
+  if (typeof IntersectionObserver === 'function') { io = new IntersectionObserver((es) => { for (const e of es) S.seen = e.isIntersecting; }); io.observe(canvas); }
+  const onSize = () => { if (still) draw(); };
+  if (typeof addEventListener === 'function') addEventListener('resize', onSize);
+  draw();
+  S.raf = requestAnimationFrame(frame);
+  return {
+    FACES,
+    setFaces(states) { for (let i = 0; i < FACES; i++) S.faces[i] = Number(states && states[i]) || 0; if (still) draw(); },
+    setEnergy(x) { S.target = Math.max(0, Math.min(1.4, Number(x) || 0)); },
+    setCentre(fn) { opt.centre = fn; if (still) draw(); },
+    onHover(fn) { S.hover = fn; }, onPick(fn) { S.pick = fn; },
+    redraw: draw,
+    destroy() { S.dead = true; cancelAnimationFrame(S.raf); if (io) io.disconnect(); canvas.removeEventListener('pointerdown', down); canvas.removeEventListener('pointermove', move); canvas.removeEventListener('pointerup', up); canvas.removeEventListener('pointerleave', leave); if (typeof removeEventListener === 'function') removeEventListener('resize', onSize); },
+  };
+}
+return { FACES, STATE, NORMALS, rot, faceAt, mount };
+})();
+
+// vendor/house/house.js, inlined byte for byte (imports read the scopes above; export removed)
+const HOUSE = (() => {
+// house.js — the kit's motion: what makes a house page feel alive without saying anything untrue.
+//   reveal(root)          sections rise into place as they are reached
+//   light(root)           a soft light follows the pointer across cards
+//   count(el, text)       a receipt's number runs up to its value when first seen; the value written is exactly `text`
+//   bindScroll(crystal)   the crystal's light answers the scroll: brightest at the top, quieter as the page is read
+// Each is safe to call with nothing to act on, and does nothing where motion is not wanted.
+const still = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function reveal(root) {
+  const els = root && root.querySelectorAll ? [...root.querySelectorAll('.reveal')] : [];
+  if (typeof IntersectionObserver !== 'function' || still()) return;                 // nothing is hidden, so nothing needs showing
+  if (root.documentElement && root.documentElement.classList) root.documentElement.classList.add('js');   // only now may .reveal start hidden
+  const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }, { threshold: 0.14 });
+  for (const el of els) io.observe(el);
+}
+
+function light(root) {
+  if (!root || !root.addEventListener || still()) return;
+  root.addEventListener('pointermove', (e) => {
+    const card = e.target && e.target.closest ? e.target.closest('.act') : null;
+    if (!card) return;
+    const b = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${e.clientX - b.left}px`); card.style.setProperty('--my', `${e.clientY - b.top}px`);
+  });
+}
+
+// count(el, text): text is the final, true text of the number (for example "31.6%"). Only its digits move, and only
+// on the way in: when it stops, the element holds exactly `text`.
+function count(el, text) {
+  const final = String(text), m = final.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
+  if (!el || !m || still() || typeof requestAnimationFrame !== 'function' || typeof IntersectionObserver !== 'function') { if (el) el.textContent = final; return; }
+  const to = Number(m[2]), places = (m[2].split('.')[1] || '').length;
+  el.textContent = final;
+  const io = new IntersectionObserver((es) => {
+    if (!es.some((e) => e.isIntersecting)) return;
+    io.disconnect();
+    const t0 = performance.now(), run = (now) => { const k = Math.min(1, (now - t0) / 900), ease = 1 - (1 - k) ** 3; el.textContent = k < 1 ? `${m[1]}${(to * ease).toFixed(places)}${m[3]}` : final; if (k < 1) requestAnimationFrame(run); };
+    requestAnimationFrame(run);
+  }, { threshold: 0.4 });
+  io.observe(el);
+}
+
+function bindScroll(crystal, base) {
+  if (!crystal || typeof addEventListener !== 'function') return;
+  const top = base ?? 1, set = () => crystal.setEnergy(top * Math.max(0.35, 1 - (globalThis.scrollY || 0) / ((globalThis.innerHeight || 800) * 1.2)));
+  addEventListener('scroll', set, { passive: true }); set();
+}
+return { reveal, light, count, bindScroll };
+})();
+
+// vendor/house/receipts.mjs, inlined byte for byte (imports read the scopes above; export removed)
+const RECEIPTS = (() => {
+// receipts.mjs — read a flagship's own published page for the numbers it has sealed, so that the front door never
+// types a number: it reads each one from the page that proves it, and can read it again, live, in a visitor's tab.
+//
+// A flagship's page is baked by its own gated kernels from its own sealed records. What is read here is what that
+// page says, word for word; this file adds nothing and rounds nothing.
+//
+//   text(html)              the page as a visitor reads it: the body, tags gone, spaces single
+//   claims(html)            every pre-registered claim on the page: [{ id, name, result, pass }] (pass: true, false,
+//                           or null while it is still sealing). Both layouts are read: the table and the house stack.
+//   headline(repo, html)    that build's headline receipt, or null when its page does not state one:
+//                           { was, now, of, label }  (was → now, out of how many, in plain words)
+//   extra(repo, html)       further receipts a page states: [{ key, value, of, label }]
+// Pure and total.
+const str = (x) => (typeof x === 'string' ? x : '');
+const un = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+const flat = (s) => un(s.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+
+// shown(html) → the body as markup, without its scripts and styles: only what a visitor is shown is ever read
+const shown = (html) => { const h = str(html), a = h.search(/<body[\s>]/i); return a === -1 ? '' : h.slice(a).replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' '); };
+
+function text(html) { return flat(shown(html)); }
+
+function claims(html) {
+  const h = shown(html), out = [], seen = new Set();
+  const add = (id, name, result, pass) => { if (!seen.has(id)) { seen.add(id); out.push({ id, name: flat(name), result: flat(result), pass }); } };
+  // the table: <tr><td><b>C1</b> name</td><td>the bar</td><td>what happened</td><td><span class="pass">PASS</span>…
+  for (const m of h.matchAll(/<tr><td><b>([A-Z]\d{1,2})<\/b>([^<]*)<\/td>([\s\S]*?)<\/tr>/g)) {
+    const cells = [...m[3].matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/g)].map((c) => c[1]);
+    add(m[1], m[2], cells[1] ?? '', /class="pass">PASS</.test(m[3]) ? true : /class="fail">FAIL</.test(m[3]) ? false : null);
+  }
+  // the house stack: <div class="srow"><div class="d">K1</div><div class="nm"><b>name</b><span>what happened</span><span class="tag cy">pass</span>
+  for (const m of h.matchAll(/<div class="srow[^"]*"><div class="d">([A-Z]\d{1,2})<\/div><div class="nm"><b>([^<]*)<\/b><span>([\s\S]*?)<\/span><span class="tag (cy|rd|gd)">/g)) add(m[1], m[2], m[3], m[4] === 'cy' ? true : m[4] === 'rd' ? false : null);
+  return out;
+}
+
+const READ = {
+  'the-climb': (t) => { const m = t.match(/right at the first try (\d+(?:\.\d+)?%) \((\d+) of (\d+)\) right after the climb (\d+(?:\.\d+)?%) \((\d+) of \3\)/); return m && { was: m[1], now: m[4], of: Number(m[3]), label: 'sealed problems right: at one try, then after the climb' }; },
+  'the-crystal': (t) => { const m = t.match(/one try (\d+(?:\.\d+)?%), the crystal (\d+(?:\.\d+)?%) of (\d+) problems/); return m && { was: m[1], now: m[2], of: Number(m[3]), label: 'sealed problems right: at one try, then as a crystal' }; },
+  'the-verifier-set': (t) => { const m = t.match(/got (\d+) of (\d+) right; on the \d+ problems that have no answer it gave a number \d+ times\. The lattice brought (\d+) of \2 out/); return m && { was: m[1], now: m[3], of: Number(m[2]), label: 'sealed problems that came out as they should: unchecked, then checked' }; },
+  'the-distillation': (t) => { const m = t.match(/(\d+(?:\.\d+)?%) → (\d+(?:\.\d+)?%) Right, cold, on (\d+) held-out problems/); return m && { was: m[1], now: m[2], of: Number(m[3]), label: 'held-out problems right, cold: before, then after training on its own verified work' }; },
+};
+const MORE = {
+  'the-crystal': (t) => { const m = t.match(/forged replies that bonded (\d+) of (\d+)/); return m ? [{ key: 'forged', value: m[1], of: Number(m[2]), label: 'forged replies that got past the check' }] : []; },
+  'the-verifier-set': (t) => { const m = t.match(/on the (\d+) with no answer it gave a number (\d+) times\. With the checks, \d+ of \d+ came out as they should, and none of those \1 was answered/); return m ? [{ key: 'unanswerable', value: m[2], after: '0', of: Number(m[1]), label: 'confident numbers given to questions that have no answer: unchecked, then checked' }] : []; },
+};
+const own = (map, repo) => (typeof repo === 'string' && Object.prototype.hasOwnProperty.call(map, repo) ? map[repo] : null);
+
+function headline(repo, html) { const f = own(READ, repo); return f ? f(text(html)) || null : null; }
+function extra(repo, html) { const f = own(MORE, repo); return f ? f(text(html)) : []; }
+return { text, claims, headline, extra };
+})();
+
 // src/genome.mjs, inlined byte for byte (imports read the scopes above; export removed)
 const GENOME = (() => {
 // genome.mjs — the four laws, as the birth-check every cell runs on itself. A descriptor is a cell only when all four
@@ -808,6 +1285,59 @@ const ready = (async function start() {
   device();
 })();
 if (typeof window !== 'undefined') window.__seed = { S, ready, render, plantLive, liveTasks };
+
+// house-app.js — the house layer for The Seed. It adds nothing to what this build proves: it waits for the page
+// script above to finish, reads the recorded plant and the gate record that script loaded, and shows them the house
+// way: receipts, the organs as a stack, and a crystal whose lit faces are organs, grown cells and probes of the floor.
+// The receipts are the published plant's, and stay so when a visitor plants one of their own in the glass below.
+window.__houseLayer = (async () => {
+  await window.__seed.ready;
+  const S = window.__seed.S, r = S.data.published, gates = S.data.gates || {}, files = gates.files || {};
+  const el = (id) => document.getElementById(id), safe = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const src = (href, words) => `<a class="src" href="${href}">receipt: ${words} ↗</a>`, of = (x) => `<span class="was" style="font-size:.42em"> /${safe(x)}</span>`;
+  const stat = (n, lab, s) => `<div class="stat reveal"><div class="n">${n}</div><div class="lab">${lab}</div>${s}</div>`;
+  const SEALING = '<span class="tag gd">sealing now</span>';
+  const faces = [];                                                  // [state, what the face says, the section it belongs to]
+
+  // the organs: the page script has already drawn them as a table, from its own list; this reads that table
+  const table = String(el('blueprint') && el('blueprint').innerHTML || '');
+  const organs = [...table.matchAll(/<tr><td><b>([^<]*)<\/b><br><span class="small">([^<]*)<\/span><\/td><td>([^<]*)<\/td>/g)].map((m) => ({ name: m[1], file: m[2], line: m[3] }));
+  // a gated file that is not one of the organs is listed after them, by what it is
+  const ALSO = { 'genome/cell.mjs': ['The birth check', 'This repository\'s own answers when the estate asks it to prove it is a cell.'] };
+  for (const f of Object.keys(files)) if (!organs.some((o) => o.file === f)) organs.push({ name: safe((ALSO[f] || [f])[0]), file: safe(f), line: safe((ALSO[f] || ['', ''])[1]) });
+  const rows = organs.map((o, i) => {
+    const g = files[o.file], state = !g ? 2 : g.clean === true ? 1 : 3;
+    faces.push([state, `<b>${o.name}</b> · ${!g ? 'gate not recorded yet' : `${g.clean === true ? 'gated' : 'gate not clean'} ${g.killed}/${g.total}`}`, 'organs']);
+    return `<div class="srow ${state === 3 ? 'red' : state === 2 ? 'gold' : ''}"><div class="d">${String(i + 1).padStart(2, '0')}</div><div class="nm"><b>${o.name}</b><span>${o.line}</span>${!g ? SEALING : g.clean === true ? `<span class="tag cy">gated ${g.killed}/${g.total}</span>` : `<span class="tag rd">gate not clean ${g.killed}/${g.total}</span>`}</div></div>`;
+  });
+  el('hsClaims').innerHTML = rows.join('') || `<div class="srow gold"><div class="d">—</div><div class="nm"><span>the organs are not listed yet</span>${SEALING}</div></div>`;
+
+  // the receipts: the recorded plant, then the gate
+  const stats = [];
+  if (r && r.floor && Array.isArray(r.cells)) {
+    const t = { proven: 0, grounded: 0 }; for (const c of r.cells) if (c.sealed) t[c.strength] = (t[c.strength] || 0) + 1;
+    const plant = src('data/runs/plant.json', 'the recorded plant'), one = r.dissolved === 1;
+    stats.push(stat(`<span class="now">${safe(r.sealed)}</span>${of(r.cells.length)}`, `<b>Cells sealed, of ${r.cells.length} grown.</b> ${t.proven} proven by exact arithmetic, ${t.grounded} grounded in a cited document.`, plant));
+    stats.push(stat(`<span class="${r.dissolved > 0 ? 'bad' : 'now'}">${safe(r.dissolved)}</span>`, `<b>${one ? 'Cell' : 'Cells'} dissolved.</b> The check did not pass, so ${one ? 'it was' : 'they were'} not kept.`, plant));
+    stats.push(stat(`<span class="was">${safe(r.floor.right)}</span>${of(r.floor.asked)}`, '<b>Right on the floor, cold.</b> The same model with no check: the bar a grown cell has to beat.', plant));
+    stats.push(stat(r.alive ? '<span class="now">yes</span>' : '<span class="bad">no</span>', r.alive ? '<b>It reproduces.</b> A sealed cell carried the seed and forged the next, which grew and sealed in turn.' : '<b>It did not reproduce.</b> No sealed cell forged a next one that sealed.', plant));
+    for (const c of r.cells) faces.push([c.sealed ? 1 : 3, `<b>Cell ${safe(c.id)} · ${safe(c.ask)}</b> · ${c.sealed ? `sealed, ${safe(c.strength)}` : `dissolved: ${safe(c.why)}`}`, 'result']);
+    for (const p of r.floor.rows || []) faces.push([p.ok ? 1 : 3, `<b>Floor probe ${safe(p.id)}</b> · ${safe(p.floor)} · the model alone got it ${p.ok ? 'right' : 'wrong'}`, 'result']);
+  } else stats.push(`<div class="stat"><div class="n"><span class="wait">—</span></div><div class="lab">The recorded plant. ${SEALING}</div></div>`);
+  if (Number.isInteger(gates.killed) && Number.isInteger(gates.total)) stats.push(stat(`<span class="${gates.clean === true ? 'now' : 'bad'}">${gates.killed}</span>${of(gates.total)}`, `<b>Planted bugs caught.</b> Across its ${Object.keys(files).length} gated files, by their own tests.`, src('data/gates.json', 'the gate record')));
+  el('hsReceipts').innerHTML = stats.join('');
+
+  const rest = `${r ? `${safe(r.sealed)} cells sealed · ${safe(r.dissolved)} dissolved and kept on the page · ` : ''}${Number.isInteger(gates.killed) ? `${gates.killed} of ${gates.total} planted bugs caught · ` : ''}point at a face`;
+  el('hsFacet').innerHTML = rest;
+  const crystal = CRYSTAL.mount(el('crystal'), { energy: 0.9 });
+  if (crystal) {
+    crystal.setFaces(Array.from({ length: 32 }, (_, i) => (faces[i] ? faces[i][0] : 0)));
+    crystal.onHover((i) => { el('hsFacet').innerHTML = faces[i] ? faces[i][1] : rest; });
+    crystal.onPick((i) => { const s = el(faces[i] ? faces[i][2] : 'result'); if (s && s.scrollIntoView) s.scrollIntoView({ behavior: 'smooth' }); });
+    HOUSE.bindScroll(crystal, 0.9);
+  }
+  HOUSE.reveal(document); HOUSE.light(document);
+})();
 </script>
 </body>
 </html>

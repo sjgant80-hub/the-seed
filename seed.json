@@ -1,0 +1,32 @@
+{
+  "genome": "1",
+  "name": "the-seed",
+  "kind": "repo",
+  "purpose": "A handful of small files that grow verified software one cell at a time: a model writes each cell, code checks it down to an axiom floor the seed works out itself, a cell that proves out is sealed, and one that cannot is dissolved.",
+  "lane": {
+    "id": "the-seed-floor",
+    "accepts": "a whole-number sum of + - and ×, with brackets, and a reply to it",
+    "refuses": "anything the floor cannot work out exactly: words, letters, division, fractions, or a reply with no whole number in it"
+  },
+  "interface": {
+    "in": "{\"ask\":\"12 × 11\",\"reply\":\"132\"}",
+    "out": "verified when the sum comes to exactly the whole number the reply ends on, unverified when it does not, refused when the sum or the reply cannot be read"
+  },
+  "judge": {
+    "what": "a reply is right when the sum, worked out in exact whole numbers with no rounding, equals the whole number the reply ends on",
+    "run": "node genome/judge.mjs",
+    "cases": {
+      "good": { "ask": "12 × 11", "reply": "132" },
+      "bad": { "ask": "25 × 4 × 3", "reply": "950" }
+    }
+  },
+  "boundary": {
+    "run": "node genome/lane.mjs",
+    "inLane": { "ask": "144 + 56 - 8", "reply": "192" },
+    "outOfLane": { "ask": "the best pizza topping", "reply": "cheese" },
+    "escalate": "kar"
+  },
+  "health": { "run": "node genome/health.mjs" },
+  "tombstone": { "apply": "node genome/tombstone.mjs apply", "restore": "node genome/tombstone.mjs restore" },
+  "provenance": { "repo": "sjgant80-hub/the-seed", "by": "Kar, for Simon Gant", "born": "2026-11-25" }
+}
