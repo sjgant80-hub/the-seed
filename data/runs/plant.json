@@ -1,0 +1,268 @@
+{
+ "v": "the-seed-plant/1",
+ "at": "2026-11-25T15:04:17.800Z",
+ "terminatedBelow": true,
+ "floor": {
+  "asked": 4,
+  "right": 2,
+  "rate": 0.5,
+  "rows": [
+   {
+    "id": "a1",
+    "floor": "exact-arithmetic",
+    "ok": true
+   },
+   {
+    "id": "a2",
+    "floor": "exact-arithmetic",
+    "ok": true
+   },
+   {
+    "id": "a3",
+    "floor": "exact-arithmetic",
+    "ok": false
+   },
+   {
+    "id": "b1",
+    "floor": "byte-equality",
+    "ok": false
+   }
+  ]
+ },
+ "cells": [
+  {
+   "id": "c1",
+   "task": "c1",
+   "ask": "12 × 11",
+   "reply": "132",
+   "bond": {
+    "bonded": true,
+    "strength": "proven",
+    "root": "exact-arithmetic",
+    "why": "bonded"
+   },
+   "descriptor": {
+    "purpose": "A cell that works out 12 × 11 and proves it by exact arithmetic, to the last digit, with no rounding.",
+    "verify": "proven",
+    "prune": "die when a smaller cell proves the same sum",
+    "lane": {
+     "accepts": "a whole-number sum of + - and ×",
+     "refuses": "anything that is not one"
+    }
+   },
+   "birth": {
+    "admitted": true,
+    "parts": {
+     "describe": true,
+     "verify": true,
+     "prune": true,
+     "boundary": true
+    },
+    "missing": []
+   },
+   "sealed": true,
+   "why": "sealed",
+   "strength": "proven"
+  },
+  {
+   "id": "c2",
+   "task": "c2",
+   "ask": "144 + 56 - 8",
+   "reply": "128",
+   "bond": {
+    "bonded": false,
+    "strength": "unknown",
+    "root": null,
+    "why": "the check did not pass"
+   },
+   "descriptor": {
+    "purpose": "A cell that works out 144 + 56 - 8 and proves it by exact arithmetic, to the last digit, with no rounding.",
+    "verify": "proven",
+    "prune": "die when a smaller cell proves the same sum",
+    "lane": {
+     "accepts": "a whole-number sum of + - and ×",
+     "refuses": "anything that is not one"
+    }
+   },
+   "birth": {
+    "admitted": true,
+    "parts": {
+     "describe": true,
+     "verify": true,
+     "prune": true,
+     "boundary": true
+    },
+    "missing": []
+   },
+   "sealed": false,
+   "why": "the check did not pass",
+   "strength": null
+  },
+  {
+   "id": "c3",
+   "task": "c3",
+   "ask": "25 × 4 × 3",
+   "reply": "950",
+   "bond": {
+    "bonded": false,
+    "strength": "unknown",
+    "root": null,
+    "why": "the check did not pass"
+   },
+   "descriptor": {
+    "purpose": "A cell that works out 25 × 4 × 3 and proves it by exact arithmetic, to the last digit, with no rounding.",
+    "verify": "proven",
+    "prune": "die when a smaller cell proves the same sum",
+    "lane": {
+     "accepts": "a whole-number sum of + - and ×",
+     "refuses": "anything that is not one"
+    }
+   },
+   "birth": {
+    "admitted": true,
+    "parts": {
+     "describe": true,
+     "verify": true,
+     "prune": true,
+     "boundary": true
+    },
+    "missing": []
+   },
+   "sealed": false,
+   "why": "the check did not pass",
+   "strength": null
+  },
+  {
+   "id": "c4",
+   "task": "c4",
+   "ask": "cite the unit price",
+   "reply": "The unit price is 126 pounds.",
+   "bond": {
+    "bonded": true,
+    "strength": "grounded",
+    "root": "byte-equality",
+    "why": "bonded"
+   },
+   "descriptor": {
+    "purpose": "A cell that cites the unit price from the document, grounded in the document's own words, read back byte for byte.",
+    "verify": "grounded",
+    "prune": "die when the document no longer states this figure",
+    "lane": {
+     "accepts": "a figure stated once in the document",
+     "refuses": "a figure not in the document, or stated two ways"
+    }
+   },
+   "birth": {
+    "admitted": true,
+    "parts": {
+     "describe": true,
+     "verify": true,
+     "prune": true,
+     "boundary": true
+    },
+    "missing": []
+   },
+   "sealed": true,
+   "why": "sealed",
+   "strength": "grounded"
+  },
+  {
+   "id": "c5",
+   "task": "c5",
+   "ask": "cite the daily rate",
+   "reply": "The daily rate is 90 pounds.",
+   "bond": {
+    "bonded": true,
+    "strength": "grounded",
+    "root": "byte-equality",
+    "why": "bonded"
+   },
+   "descriptor": {
+    "purpose": "A cell that cites the daily rate from the document, grounded in the document's own words, read back byte for byte.",
+    "verify": "grounded",
+    "prune": "die when the document no longer states this figure",
+    "lane": {
+     "accepts": "a figure stated once in the document",
+     "refuses": "a figure not in the document, or stated two ways"
+    }
+   },
+   "birth": {
+    "admitted": true,
+    "parts": {
+     "describe": true,
+     "verify": true,
+     "prune": true,
+     "boundary": true
+    },
+    "missing": []
+   },
+   "sealed": true,
+   "why": "sealed",
+   "strength": "grounded"
+  }
+ ],
+ "sealed": 3,
+ "dissolved": 2,
+ "byStrength": {
+  "proven": 1,
+  "grounded": 2
+ },
+ "selfSimilar": {
+  "carries": true,
+  "forged": true,
+  "nextSealed": true,
+  "next": {
+   "id": "c1+",
+   "task": "c1+",
+   "ask": "(12 × 11) + 7",
+   "reply": "132 + 7 = 139",
+   "bond": {
+    "bonded": true,
+    "strength": "proven",
+    "root": "exact-arithmetic",
+    "why": "bonded"
+   },
+   "descriptor": {
+    "purpose": "The next cell: 7 added to the sum this one proved, worked out and proven by exact arithmetic.",
+    "verify": "proven",
+    "prune": "die when a smaller cell proves the same sum",
+    "lane": {
+     "accepts": "a whole-number sum of + - and ×",
+     "refuses": "anything that is not one"
+    }
+   },
+   "birth": {
+    "admitted": true,
+    "parts": {
+     "describe": true,
+     "verify": true,
+     "prune": true,
+     "boundary": true
+    },
+    "missing": []
+   },
+   "sealed": true,
+   "why": "sealed",
+   "strength": "proven"
+  }
+ },
+ "alive": true,
+ "model": "Llama-3.2-1B-Instruct-q4f16_1-MLC",
+ "gpu": "intel gen-12lp",
+ "venue": "tab (WebLLM, WebGPU)",
+ "sealSha256": "ed9768bb672634d34f5f7eaa5d42ae76e27a5f64cda19d8c07ed26e52899106a",
+ "replies": {
+  "a1": "4",
+  "a2": "42",
+  "a3": "90",
+  "b1": "-1",
+  "c1": "132",
+  "c2": "128",
+  "c3": "950",
+  "c4": "The unit price is 126 pounds.",
+  "c5": "The daily rate is 90 pounds.",
+  "c1+": "132 + 7 = 139",
+  "c2+": "128",
+  "c3+": "820"
+ }
+}

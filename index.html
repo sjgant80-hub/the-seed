@@ -65,11 +65,11 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
   <div class="row"><button id="plant" type="button">Plant it here</button><button id="play" class="quiet" type="button">Show the recorded plant</button><span class="small">the model runs in your browser, on your own chip · about 880 MB, once</span></div>
   <p id="status" class="small" aria-live="polite">not planted yet</p>
   <div class="ledger" aria-label="What grew">
-    <span><b data-bind="n.floor">—</b>floor, cold</span>
-    <span><b data-bind="n.sealed">—</b>cells sealed</span>
-    <span><b data-bind="n.proven">—</b>proven</span>
-    <span><b data-bind="n.grounded">—</b>grounded</span>
-    <span><b data-bind="n.alive">—</b>reproduces</span>
+    <span><b data-bind="n.floor">2/4</b>floor, cold</span>
+    <span><b data-bind="n.sealed">3</b>cells sealed</span>
+    <span><b data-bind="n.proven">1</b>proven</span>
+    <span><b data-bind="n.grounded">2</b>grounded</span>
+    <span><b data-bind="n.alive">yes</b>reproduces</span>
   </div>
   <p class="key"><span><i style="background:var(--lume)"></i>proven — exact arithmetic, nothing taken on trust</span><span><i style="background:var(--amber)"></i>grounded — a figure from a document, as true as the document</span></p>
   <p class="tags">Verify or dissolve · Grows only where a verifier can check · A human at the top, axioms at the bottom.</p>
@@ -117,12 +117,12 @@ footer{max-width:860px;margin:0 auto;padding:24px 16px;color:var(--ink-2);font:5
 
 <section class="panel" id="numbers">
   <h2>The <em>numbers</em></h2>
-  <p class="small" data-bind="h.source">No plant has been recorded yet.</p>
-  <div id="planted">not planted yet</div>
+  <p class="small" data-bind="h.source">From the published plant: Llama-3.2-1B-Instruct-q4f16_1-MLC, intel gen-12lp (2026-11-25).</p>
+  <div id="planted"><p>Planted, the seed probed the floor, grew <b>3</b> cells (1 proven, 2 grounded) and dissolved <b>2</b>. A sealed cell carried the seed and forged the next, which grew and sealed in turn: the pattern is self-similar, so the organism is <b class="pass">alive</b>. The seed did nothing irreversible — it asked for no grant.</p></div>
   <h3>The axiom floor, cold</h3>
-  <div class="wrap" id="floorTable">not planted yet</div>
+  <div class="wrap" id="floorTable"><table><thead><tr><th>axiom task</th><th>floor</th><th>model, cold</th></tr></thead><tbody><tr><td>a1</td><td>exact-arithmetic</td><td><span class="pass">right</span></td></tr><tr><td>a2</td><td>exact-arithmetic</td><td><span class="pass">right</span></td></tr><tr><td>a3</td><td>exact-arithmetic</td><td><span class="fail">wrong</span></td></tr><tr><td>b1</td><td>byte-equality</td><td><span class="fail">wrong</span></td></tr></tbody></table></div>
   <h3>The cells it grew</h3>
-  <div class="wrap" id="cellsTable">not planted yet</div>
+  <div class="wrap" id="cellsTable"><table><thead><tr><th>cell</th><th>the model wrote</th><th>bond</th></tr></thead><tbody><tr><td>12 × 11</td><td>132</td><td><span class="proven">proven</span></td></tr><tr><td>144 + 56 - 8</td><td>128</td><td><span class="fail">dissolved</span> <span class="small">(the check did not pass)</span></td></tr><tr><td>25 × 4 × 3</td><td>950</td><td><span class="fail">dissolved</span> <span class="small">(the check did not pass)</span></td></tr><tr><td>cite the unit price</td><td>The unit price is 126 pounds.</td><td><span class="grounded">grounded</span></td></tr><tr><td>cite the daily rate</td><td>The daily rate is 90 pounds.</td><td><span class="grounded">grounded</span></td></tr></tbody></table></div>
 </section>
 
 <section class="panel" id="blueprint">
