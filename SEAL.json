@@ -1,0 +1,17 @@
+{
+ "v": "the-seed-seal/1",
+ "note": "every file that can change a plant, frozen; a published plant records the SHA-256 of this file",
+ "files": {
+  "src/distill.mjs": "fb0c39e573e7d0de0c41b479b3d9fdb9fc401111b0134fa8041f105c2ff2f6d6",
+  "src/floor.mjs": "829a2b52944ecd36917a764446416545e2b117d395940a92db3dc824c552f83b",
+  "src/forge.mjs": "f8cd152f24d9cd0e2473e34f69ecf9e76e7fd8f632c8fd6d5a45f736378e3ebd",
+  "src/genome.mjs": "447ac24800d889c6dc8f62197f016960749dfa2ea336a7230eabcc58c3d8f05f",
+  "src/loop.mjs": "ff561fb7279bba31995eff7730dea26b843dc8467fea722bce320b3456584bda",
+  "src/plant.mjs": "7d323cd05e3392189a0eb8352713df2bf7f3d8511682de6147a1bb06d5647e5b",
+  "src/terminate.mjs": "a891c6c8d8177bef66e074186ca8f87210fae36d65dc04e08f45129e817d8889",
+  "src/verifier.mjs": "80b4d8103444ace76f9992c585e8c0cdea309c3491825cbb87a01c930a50fb77",
+  "src/watcher.mjs": "61633dd4b1bdfa031a16bf04935e7261f5a21167e61fbd5ea7529eed4414cd72",
+  "page/seedset.js": "00bda8a21432d11c588b4bf2042a56ff15a66b4b66e974df1409d1d4991bc21f",
+  "page/glass.js": "7cfca019c31dc19a85605a07c59be5b2825fed7aa09d767b0e44cb2785780d29"
+ }
+}

@@ -1,0 +1,40 @@
+name: gate
+# The Seed is gated like a cell: tests (the seal and the page build among them), a mutation witness that must be CLEAN
+# on every organ with the counts committed in data/gates.json, and every published plant re-grown identically from its
+# recorded replies with no model. The mutation gate runs one job per organ: run one after another they would take long.
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.list.outputs.files }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: tests (including the seal and the page build)
+        run: node --test test/*.test.mjs
+      - name: every published plant re-grows identically from its recorded replies, with no model
+        run: node scripts/publish.mjs --check
+      - name: the committed gate record lists every organ, each CLEAN
+        run: node scripts/gates.mjs --record
+      - name: the organs, for the mutation gate below
+        id: list
+        run: echo "files=$(node scripts/gates.mjs --list)" >> "$GITHUB_OUTPUT"
+  mutation:
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        file: ${{ fromJSON(needs.gate.outputs.files) }}
+    name: mutation gate · ${{ matrix.file }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: CLEAN, with the counts as committed
+        run: |
+          git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git .witness
+          node scripts/gates.mjs --witness .witness/witness.mjs --check --only "${{ matrix.file }}"

@@ -1,0 +1,65 @@
+{
+ "witness": "v0.6",
+ "total": 131,
+ "killed": 131,
+ "clean": true,
+ "files": {
+  "src/genome.mjs": {
+   "total": 18,
+   "killed": 18,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/floor.mjs": {
+   "total": 43,
+   "killed": 43,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/verifier.mjs": {
+   "total": 14,
+   "killed": 14,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/loop.mjs": {
+   "total": 10,
+   "killed": 10,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/terminate.mjs": {
+   "total": 13,
+   "killed": 13,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/watcher.mjs": {
+   "total": 6,
+   "killed": 6,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/forge.mjs": {
+   "total": 7,
+   "killed": 7,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/distill.mjs": {
+   "total": 6,
+   "killed": 6,
+   "ignored": 0,
+   "clean": true
+  },
+  "src/plant.mjs": {
+   "total": 14,
+   "killed": 14,
+   "ignored": 0,
+   "clean": true
+  }
+ },
+ "nothingToMutate": {
+  "page/glass.js": "the glass draws a plant record and decides nothing; its drawing is checked in a browser"
+ }
+}

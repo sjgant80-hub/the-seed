@@ -1,0 +1,8 @@
+{
+  "name": "the-seed",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "The Seed: a minimal transmissible repo that plants a verify-or-dissolve loop and grows a verified organism, cell by cell.",
+  "license": "MIT"
+}
