@@ -26,7 +26,9 @@ if (args.includes('--check')) {
   for (const [k, path] of Object.entries(pub)) {
     if (k === 'note' || !path) continue;
     if (!existsSync(new URL(`../${path}`, import.meta.url))) { console.error(`missing: ${path}`); bad++; continue; }
-    const rec = read(path), { ok } = regrow(rec);
+    const rec = read(path);
+    if (rec.v !== 'the-seed-plant/1') { console.log(`skip  ${k}: not a plant run (${rec.v || 'no version'})`); continue; }
+    const { ok } = regrow(rec);
     console.log(`${ok ? 'OK' : 'DIFFERS'}  ${k}: ${rec.sealed} cells, alive=${rec.alive}, grown again ${ok ? 'identically' : 'DIFFERENTLY'} with no model`);
     if (!ok) bad++;
   }
