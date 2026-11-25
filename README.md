@@ -89,3 +89,5 @@ to the same result (`scripts/publish.mjs --check`).
 
 Built by Kar. MIT licence, holder Simon Gant. Supplied by [AI Native Solutions](https://www.ai-nativesolutions.com);
 support is agreed per deployment, in each deployment's agreement.
+
+Powered by the Konomi architecture, created by Thomas Frumkin.
