@@ -24,6 +24,15 @@ window.__houseLayer = (async () => {
   });
   el('hsClaims').innerHTML = rows.join('') || `<div class="srow gold"><div class="d">—</div><div class="nm"><span>the organs are not listed yet</span>${SEALING}</div></div>`;
 
+  // the pre-registered claims, each verdict COMPUTED from the record by CLAIMS.evaluate — never asserted
+  const verdicts = CLAIMS.evaluate({ gates, plant: r && Array.isArray(r.cells) ? r : {} });
+  el('claimRows').innerHTML = verdicts.map((c) => {
+    const state = c.pass === true ? 1 : c.pass === false ? 3 : 2;
+    faces.push([state, `<b>${c.id} ${safe(c.name)}</b> · ${c.pass === true ? 'pass' : c.pass === false ? 'FAIL, kept' : 'sealing'}`, 'claims']);
+    const tag = c.pass === true ? '<span class="tag cy">pass</span>' : c.pass === false ? '<span class="tag rd">fail · kept</span>' : SEALING;
+    return `<div class="srow ${state === 3 ? 'red' : state === 2 ? 'gold' : ''}"><div class="d">${c.id}</div><div class="nm"><b>${safe(c.name)}</b><span>${safe(c.result)}</span>${tag}</div></div>`;
+  }).join('') || `<div class="srow gold"><div class="d">—</div><div class="nm"><span>the claims are not decided yet</span>${SEALING}</div></div>`;
+
   // the receipts: the recorded plant, then the gate
   const stats = [];
   if (r && r.floor && Array.isArray(r.cells)) {

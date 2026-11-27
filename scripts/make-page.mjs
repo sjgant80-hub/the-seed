@@ -12,13 +12,13 @@ import { fileURLToPath } from 'node:url';
 // [namespace, file] in dependency order; each module may import only from the ones above it
 export const KERNELS = [
   // the house kit (the crystal, the motion) and the house's receipts reader, as vendored
-  ['CRYSTAL', 'vendor/house/crystal.js'], ['HOUSE', 'vendor/house/house.js'], ['RECEIPTS', 'vendor/house/receipts.mjs'],
+  ['CRYSTAL', 'vendor/house/crystal.js'], ['HOUSE', 'vendor/house/house.js'], ['RECEIPTS', 'vendor/house/receipts.mjs'], ['CLAIMS', 'scripts/claims.mjs'],
   ['GENOME', 'src/genome.mjs'], ['FLOOR', 'src/floor.mjs'], ['VERIFIER', 'src/verifier.mjs'], ['LOOP', 'src/loop.mjs'],
   ['TERMINATE', 'src/terminate.mjs'], ['WATCHER', 'src/watcher.mjs'], ['FORGE', 'src/forge.mjs'], ['DISTILL', 'src/distill.mjs'],
   ['PLANT', 'src/plant.mjs'], ['SEEDSET', 'page/seedset.js'], ['GLASS', 'page/glass.js'],
 ];
 // what bake() writes into the page: these ids, and every data-bind. Device, load and plant status are the visitor's own.
-export const BAKED = ['hsFacet', 'hsReceipts', 'hsClaims', 'planted', 'cellsTable', 'floorTable', 'blueprint', 'walk'];
+export const BAKED = ['hsFacet', 'hsReceipts', 'claimRows', 'hsClaims', 'planted', 'cellsTable', 'floorTable', 'blueprint', 'walk'];
 const LF = (s) => s.split('\r\n').join('\n');
 const nsOf = (spec, from) => {
   const name = spec.split('/').pop();
