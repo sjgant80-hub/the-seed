@@ -1,8 +1,10 @@
-// claims.mjs — the verdict on every pre-registered claim about the-seed, worked out from the recorded
-// gate record (data/gates.json) and the recorded plant run (data/runs/plant.json). Pure and total: a claim
-// whose evidence is missing is pending (pass: null), never passed by default. The bars are CLAIMS.md's,
-// word for word in BARS; test/claims.test.mjs checks the file still says each one and that each verdict is
-// the one the recorded data forces. Nothing here asserts a pass — every pass is computed from the record.
+// claims.mjs — the verdict on six claims about the-seed, worked out from the recorded gate record
+// (data/gates.json) and the recorded plant run (data/runs/plant.json). NOTE: these claims were written
+// on 2026-11-27, AFTER the run of 2026-11-25 — a check of the record, not pre-registered bars; CLAIMS.md
+// and the page say so. Pure and total: a claim whose evidence is missing is pending (pass: null), never
+// passed by default. The bars are CLAIMS.md's, word for word in BARS; test/claims.test.mjs checks the file
+// still says each one, that each verdict is the one the recorded data forces, and that each can fail on a
+// tampered record. Nothing here asserts a pass — every pass is computed from the record.
 const get = (o, k) => { try { return o[k]; } catch { return undefined; } };
 const arr = (x) => (Array.isArray(x) ? x : []);
 const admitted = (c) => get(get(c, 'bond'), 'bonded') === true && get(get(c, 'birth'), 'admitted') === true;

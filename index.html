@@ -227,8 +227,9 @@ footer{border-top:1px solid var(--line2);padding-block:46px;position:relative;z-
 
 <section class="pad alt" id="claims">
   <div class="wrap">
-    <p class="kline reveal">What was written down first</p>
-    <h2 class="claim reveal">Six claims, each decided by the record. <b>Not asserted — computed.</b></h2>
+    <p class="kline reveal">Checked against the recorded run</p>
+    <h2 class="claim reveal">Six claims, each decided by the record. <b>Computed, not asserted.</b></h2>
+    <p class="small muted reveal">Written after the run they rule on (run 2026-11-25, claims 2026-11-27) — a check of the record, not a bar set before it. The test proves each can still fail on a tampered record.</p>
     <div class="stack reveal" id="claimRows"><div class="srow "><div class="d">S1</div><div class="nm"><b>Every organ proves itself under mutation</b><span>142 of 142 planted bugs caught across 10 organs; 10 of 10 files clean</span><span class="tag cy">pass</span></div></div><div class="srow "><div class="d">S2</div><div class="nm"><b>A cell seals only if it bonds and passes the genome</b><span>5 cells grown, 3 sealed, 2 dissolved; the seal-iff-proven rule held on 5 of 5</span><span class="tag cy">pass</span></div></div><div class="srow "><div class="d">S3</div><div class="nm"><b>Every sealed cell is itself a cell</b><span>3 of 3 sealed cells pass describe · verify · prune · know-your-edge</span><span class="tag cy">pass</span></div></div><div class="srow "><div class="d">S4</div><div class="nm"><b>Nothing is called truer than what it stands on</b><span>the chain bottomed out at the floor; cold, the floor alone was right on 2 of 4 — the bar a grown cell must beat</span><span class="tag cy">pass</span></div></div><div class="srow "><div class="d">S5</div><div class="nm"><b>The pattern reproduces</b><span>a sealed cell carried the seed (true), forged the next (true), and it sealed too (true)</span><span class="tag cy">pass</span></div></div><div class="srow "><div class="d">S6</div><div class="nm"><b>A cell that cannot prove itself is dissolved and not kept</b><span>2 dissolved; none bonded-and-admitted, none sealed</span><span class="tag cy">pass</span></div></div></div>
   </div>
 </section>
@@ -661,11 +662,13 @@ return { text, claims, headline, extra };
 
 // scripts/claims.mjs, inlined byte for byte (imports read the scopes above; export removed)
 const CLAIMS = (() => {
-// claims.mjs — the verdict on every pre-registered claim about the-seed, worked out from the recorded
-// gate record (data/gates.json) and the recorded plant run (data/runs/plant.json). Pure and total: a claim
-// whose evidence is missing is pending (pass: null), never passed by default. The bars are CLAIMS.md's,
-// word for word in BARS; test/claims.test.mjs checks the file still says each one and that each verdict is
-// the one the recorded data forces. Nothing here asserts a pass — every pass is computed from the record.
+// claims.mjs — the verdict on six claims about the-seed, worked out from the recorded gate record
+// (data/gates.json) and the recorded plant run (data/runs/plant.json). NOTE: these claims were written
+// on 2026-11-27, AFTER the run of 2026-11-25 — a check of the record, not pre-registered bars; CLAIMS.md
+// and the page say so. Pure and total: a claim whose evidence is missing is pending (pass: null), never
+// passed by default. The bars are CLAIMS.md's, word for word in BARS; test/claims.test.mjs checks the file
+// still says each one, that each verdict is the one the recorded data forces, and that each can fail on a
+// tampered record. Nothing here asserts a pass — every pass is computed from the record.
 const get = (o, k) => { try { return o[k]; } catch { return undefined; } };
 const arr = (x) => (Array.isArray(x) ? x : []);
 const admitted = (c) => get(get(c, 'bond'), 'bonded') === true && get(get(c, 'birth'), 'admitted') === true;
